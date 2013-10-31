@@ -1,4 +1,4 @@
-generators
+net.softwaria.generators
 ==========
 
-generators
+net.softwaria.generators
