@@ -17,4 +17,8 @@ public final class Generators {
     public static Generator<String> alphabetic(int length) {
         return new RandomAlphabeticStringGenerator(length);
     }
+
+    public static <T> Generator<T> ofInstance(T instance) {
+        return new GeneratorOfInstance<>(instance);
+    }
 }

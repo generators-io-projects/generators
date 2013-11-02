@@ -1,12 +1,12 @@
 package net.softwaria.generators;
 
 /**
- * Generates the object/value passed into the constructor.
+ * Generates the instance passed into the constructor.
  */
-public class ConstantValueGenerator<T> implements Generator<T> {
+public class GeneratorOfInstance<T> implements Generator<T> {
     private final T constantValue;
 
-    public ConstantValueGenerator(T constantValue) {
+    public GeneratorOfInstance(T constantValue) {
         this.constantValue = constantValue;
     }
 
