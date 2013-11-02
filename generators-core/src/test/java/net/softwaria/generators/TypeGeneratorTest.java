@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TinyTypeGeneratorTest {
+public class TypeGeneratorTest {
 
     private static class WholeAmount {
         private final Integer value;
@@ -28,7 +28,7 @@ public class TinyTypeGeneratorTest {
     @Test
     public void shouldGenerateTinyTypeThatHasOneArgConstructor() {
         //Given
-        Generator<WholeAmount> tinyTypeGenerator = new TinyTypeGenerator<>(WholeAmount.class, Generators.positiveInts);
+        Generator<WholeAmount> tinyTypeGenerator = new TypeGenerator<>(WholeAmount.class, Generators.positiveInts);
 
         //When
         WholeAmount wholeAmount = tinyTypeGenerator.next();
@@ -36,6 +36,5 @@ public class TinyTypeGeneratorTest {
         //Then
         assertThat(wholeAmount, notNullValue());
         assertThat(wholeAmount.getValue(), Matchers.any(Integer.class));
-
     }
 }

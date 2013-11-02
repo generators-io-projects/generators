@@ -14,7 +14,7 @@ import static java.lang.invoke.MethodType.methodType;
  * @param <T> Generated Tiny Type
  * @param <V> Value type encapsulated by TinyType
  */
-public class TinyTypeGenerator<T, V> implements Generator<T> {
+public class TypeGenerator<T, V> implements Generator<T> {
 
     private final MethodHandle constructor;
     private final Generator<V> valueGenerator;
@@ -25,7 +25,7 @@ public class TinyTypeGenerator<T, V> implements Generator<T> {
      * @param tinyTypeClass  class of the Tiny Type
      * @param valueGenerator generator for value wrapped by TinyType
      */
-    public TinyTypeGenerator(Class<T> tinyTypeClass, Generator<V> valueGenerator) {
+    public TypeGenerator(Class<T> tinyTypeClass, Generator<V> valueGenerator) {
         this.valueGenerator = valueGenerator;
         Class<?> constructorParameterClass = findConstructorParameterType(valueGenerator);
         constructor = findConstructor(tinyTypeClass, constructorParameterClass);
