@@ -1,4 +1,4 @@
-package net.softwaria.generators;
+package io.generators.core;
 
 /**
  * Generates the instance passed into the constructor.

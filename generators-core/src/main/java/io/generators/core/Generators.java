@@ -1,4 +1,4 @@
-package net.softwaria.generators;
+package io.generators.core;
 
 /**
  * Utility class listing all generators for convenience
@@ -20,5 +20,9 @@ public final class Generators {
 
     public static <T> Generator<T> ofInstance(T instance) {
         return new GeneratorOfInstance<>(instance);
+    }
+
+    public static <T, V> Generator<T> ofType(Class<T> type, Generator<V> valueGenerator) {
+        return new TypeGenerator<>(type, valueGenerator);
     }
 }

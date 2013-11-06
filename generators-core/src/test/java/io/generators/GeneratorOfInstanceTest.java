@@ -1,5 +1,6 @@
-package net.softwaria.generators;
+package io.generators;
 
+import io.generators.core.GeneratorOfInstance;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

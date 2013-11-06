@@ -1,4 +1,4 @@
-package net.softwaria.generators;
+package io.generators.core;
 
 import org.apache.commons.lang.RandomStringUtils;
 

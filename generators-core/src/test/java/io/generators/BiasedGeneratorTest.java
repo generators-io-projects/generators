@@ -1,5 +1,8 @@
-package net.softwaria.generators;
+package io.generators;
 
+import io.generators.core.BiasedGenerator;
+import io.generators.core.Generator;
+import io.generators.core.GeneratorOfInstance;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

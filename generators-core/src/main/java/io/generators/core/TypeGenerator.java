@@ -1,9 +1,9 @@
-package net.softwaria.generators;
+package io.generators.core;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.Method;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Throwables.propagate;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.lang.invoke.MethodType.methodType;
@@ -15,20 +15,19 @@ import static java.lang.invoke.MethodType.methodType;
  * @param <V> Value type encapsulated by TinyType
  */
 public class TypeGenerator<T, V> implements Generator<T> {
-
-    private final MethodHandle constructor;
+    private final Class<T> typeClass;
     private final Generator<V> valueGenerator;
+    private MethodHandle constructor;
 
     /**
      * Creates Tiny Type generator that generates &lt;T&gt; using &lt;V&gt; Generator
      *
-     * @param tinyTypeClass  class of the Tiny Type
+     * @param typeClass  class of the Tiny Type
      * @param valueGenerator generator for value wrapped by TinyType
      */
-    public TypeGenerator(Class<T> tinyTypeClass, Generator<V> valueGenerator) {
-        this.valueGenerator = valueGenerator;
-        Class<?> constructorParameterClass = findConstructorParameterType(valueGenerator);
-        constructor = findConstructor(tinyTypeClass, constructorParameterClass);
+    public TypeGenerator(Class<T> typeClass, Generator<V> valueGenerator) {
+        this.typeClass = checkNotNull(typeClass, "typeClass");
+        this.valueGenerator = checkNotNull(valueGenerator, "valueGenerator");
     }
 
     @Override
@@ -36,29 +35,19 @@ public class TypeGenerator<T, V> implements Generator<T> {
     public T next() {
         try {
             V next = valueGenerator.next();
+            lookupConstructor(typeClass, next.getClass());
             return (T) constructor.invoke(next);
         } catch (Throwable throwable) {
             throw propagate(throwable);
         }
     }
 
-    private MethodHandle findConstructor(Class<T> tinyTypeClass, Class<?> aClass) {
+    private void lookupConstructor(Class<T> typeClass, Class<?> aClass) {
+        MethodType methodType = methodType(void.class, aClass);
         try {
-            MethodType methodType = methodType(void.class, aClass);
-            return lookup().findConstructor(tinyTypeClass, methodType);
+            constructor = lookup().findConstructor(typeClass, methodType);
         } catch (ReflectiveOperationException e) {
             throw propagate(e);
         }
     }
-
-    private Class<?> findConstructorParameterType(Generator<V> valueGenerator) {
-        try {
-            Method method = valueGenerator.getClass().getMethod("next");
-            return method.getReturnType();
-        } catch (NoSuchMethodException e) {
-            throw propagate(e);
-        }
-    }
-
-
 }
