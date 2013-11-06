@@ -1,6 +1,10 @@
 package io.generators.core;
 
+import com.google.common.collect.FluentIterable;
 import io.generators.GeneratorIterable;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Utility class listing all generators for convenience
@@ -34,5 +38,13 @@ public final class Generators {
 
     public static <T> Generator<T> biased(int percentageBiasTowardsFirst, Generator<T> firstGenerator, Generator<T> secondGenerator) {
         return new BiasedGenerator<T>(percentageBiasTowardsFirst, firstGenerator, secondGenerator);
+    }
+
+    public static <T> List<T> listFrom(int limit, Generator<T> generator) {
+        return FluentIterable.from(new GeneratorIterable<T>(generator)).limit(limit).toList();
+    }
+
+    public static <T> Set<T> setFrom(int limit, Generator<T> generator) {
+        return FluentIterable.from(new GeneratorIterable<T>(generator)).limit(limit).toSet();
     }
 }
