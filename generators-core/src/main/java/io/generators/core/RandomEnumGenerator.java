@@ -1,6 +1,4 @@
-package io.generators;
-
-import io.generators.core.Generator;
+package io.generators.core;
 
 import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;

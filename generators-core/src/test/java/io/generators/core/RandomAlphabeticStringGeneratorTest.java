@@ -1,7 +1,5 @@
-package io.generators;
+package io.generators.core;
 
-import io.generators.core.Generator;
-import io.generators.core.RandomAlphabeticStringGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

@@ -1,6 +1,5 @@
-package io.generators;
+package io.generators.core;
 
-import io.generators.core.Generators;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

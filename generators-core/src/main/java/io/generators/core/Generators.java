@@ -1,8 +1,6 @@
 package io.generators.core;
 
 import com.google.common.collect.FluentIterable;
-import io.generators.GeneratorIterable;
-import io.generators.RandomEnumGenerator;
 
 import java.util.List;
 import java.util.Set;

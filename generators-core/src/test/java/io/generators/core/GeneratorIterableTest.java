@@ -1,7 +1,6 @@
-package io.generators;
+package io.generators.core;
 
 import com.google.common.collect.FluentIterable;
-import io.generators.core.Generators;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
