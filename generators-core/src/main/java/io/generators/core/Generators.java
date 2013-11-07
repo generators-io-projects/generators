@@ -2,6 +2,7 @@ package io.generators.core;
 
 import com.google.common.collect.FluentIterable;
 import io.generators.GeneratorIterable;
+import io.generators.RandomEnumGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -46,5 +47,9 @@ public final class Generators {
 
     public static <T> Set<T> setFrom(int limit, Generator<T> generator) {
         return FluentIterable.from(new GeneratorIterable<T>(generator)).limit(limit).toSet();
+    }
+
+    public static <T extends Enum<T>> Generator<T> randomEnum(Class<T> enumClass) {
+        return new RandomEnumGenerator<T>(enumClass);
     }
 }
