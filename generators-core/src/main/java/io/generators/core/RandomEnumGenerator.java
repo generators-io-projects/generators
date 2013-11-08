@@ -1,29 +1,28 @@
 package io.generators.core;
 
-import java.util.EnumSet;
-import java.util.concurrent.ThreadLocalRandom;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Generates Enum randomly selected from set of all Enums of type <code>T</code>
  */
 public class RandomEnumGenerator<T extends Enum<T>> implements Generator<T> {
-    private final Object[] enumSet;
+    private final T[] enums;
     private final ThreadLocalRandom random;
 
     /**
-     * @param enumClass
+     * @param enumClass class of the enum for which to generate the enums
      * @throws NullPointerException when <code>enumClass</code> is null
      */
     public RandomEnumGenerator(Class<T> enumClass) {
-        this.enumSet = EnumSet.allOf(checkNotNull(enumClass, "enumClass must not be null")).toArray();
+        this.enums = checkNotNull(enumClass, "enumClass must not be null").getEnumConstants();
         this.random = ThreadLocalRandom.current();
     }
 
     @Override
     @SuppressWarnings("unchecked") //generated class is always of type T
     public T next() {
-        return (T) enumSet[random.nextInt(enumSet.length)];
+        return enums[random.nextInt(enums.length)];
     }
 }
