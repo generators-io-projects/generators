@@ -56,6 +56,14 @@ public class GeneratorIterableTest {
     }
 
     @Test
+    public void shouldFailIfRemoveCalled() {
+        //Given
+        expectedException.expect(UnsupportedOperationException.class);
+        expectedException.expectMessage("remove() operation is not supported");
+        new GeneratorIterable<>(2, Generators.positiveInts).iterator().remove();
+    }
+
+    @Test
     public void shouldFailIfGeneratorIsNull() {
         //Given
         expectedException.expect(NullPointerException.class);

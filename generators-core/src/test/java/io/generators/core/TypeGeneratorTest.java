@@ -12,6 +12,13 @@ public class TypeGeneratorTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+    public static final String MESSAGE = "Some message";
+
+    static class AlwaysThrowsException {
+        public AlwaysThrowsException(Integer i) {
+            throw new IllegalArgumentException(MESSAGE);
+        }
+    }
 
     @Test
     public void shouldFailWhenTypeClassIsNull() {
@@ -32,6 +39,27 @@ public class TypeGeneratorTest {
 
         //When
         new TypeGenerator<>(WholeAmount.class, null);
+    }
+
+    @Test
+    public void shouldFailWhenTypeDoesNotHaveOneArgConstructor() {
+        //Given
+        expectedException.expect(RuntimeException.class);
+        TypeGenerator<Object, Integer> typeGenerator = new TypeGenerator<>(Object.class, Generators.positiveInts);
+
+        //When
+        typeGenerator.next();
+    }
+
+    @Test
+    public void shouldPropagateExceptionWhenTypeThrowsExceptionDuringConstruction() {
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(MESSAGE);
+        TypeGenerator<AlwaysThrowsException, Integer> typeGenerator = new TypeGenerator<>(AlwaysThrowsException.class, Generators.positiveInts);
+
+        //When
+        typeGenerator.next();
     }
 
     @Test

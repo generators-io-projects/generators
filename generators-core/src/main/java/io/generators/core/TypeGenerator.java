@@ -33,9 +33,9 @@ public class TypeGenerator<T, V> implements Generator<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T next() {
+        V next = valueGenerator.next();
+        lookupConstructor(typeClass, next.getClass());
         try {
-            V next = valueGenerator.next();
-            lookupConstructor(typeClass, next.getClass());
             return (T) constructor.invoke(next);
         } catch (Throwable throwable) {
             throw propagate(throwable);

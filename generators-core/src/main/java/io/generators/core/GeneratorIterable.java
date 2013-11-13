@@ -46,7 +46,7 @@ public class GeneratorIterable<T> implements Iterable<T> {
 
             @Override
             public void remove() {
-                throw new UnsupportedOperationException("remove() method not supported");
+                throw new UnsupportedOperationException("remove() operation is not supported");
             }
         };
     }
