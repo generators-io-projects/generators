@@ -24,6 +24,19 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/generators-io-projects/generators</url>
+        <connection>scm:git:https://github.com/generators-io-projects/generators</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Tomas Klubal</name>
+            <email>tomas.klubal@generators.io</email>
+        </developer>
+    </developers>
+
     <build>
         <pluginManagement>
             <plugins>
