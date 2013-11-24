@@ -5,6 +5,9 @@ import com.google.common.collect.FluentIterable;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.lang.Math.pow;
+
 /**
  * Utility class listing all generators for convenience
  */
@@ -49,5 +52,12 @@ public final class Generators {
 
     public static <T extends Enum<T>> Generator<T> randomEnum(Class<T> enumClass) {
         return new RandomEnumGenerator<T>(enumClass);
+    }
+
+    public static Generator<Integer> nDigitPositiveInteger(int digits) {
+        checkArgument(digits > 0 && digits < 11, "Number of digits must be between 1  and 10");
+        int from = (int) pow(10, digits - 1);
+        int to = (int) pow(10, digits);
+        return new RandomPositiveIntegerGenerator(from, to);
     }
 }

@@ -1,6 +1,8 @@
 package io.generators.core;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,10 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class GeneratorsTest {
-    enum TestEnum {
-        A,
-        B
-    }
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldReturnPositiveIntegerGenerator() {
@@ -82,5 +82,39 @@ public class GeneratorsTest {
         }
 
         assertThat(ints, containsInAnyOrder(5, 6));
+    }
+
+    @Test
+    public void shouldGenerateNumberNDigitsLong() {
+        //Given
+        Generator<Integer> integerGenerator = Generators.nDigitPositiveInteger(3);
+
+        for (int i = 0; i < 20; i++) {
+            //When
+            Integer integerWith5Digits = integerGenerator.next();
+            //Then
+            assertThat(integerWith5Digits, allOf(greaterThan(99), lessThan(1000)));
+        }
+    }
+
+    @Test
+    public void shouldNotAllowZeroForNDigitsPositiveIntegerGenerator() {
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Number of digits must be between 1  and 10");
+        Generators.nDigitPositiveInteger(0);
+    }
+
+    @Test
+    public void shouldNot11ForNDigitsPositiveIntegerGenerator() {
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Number of digits must be between 1  and 10");
+        Generators.nDigitPositiveInteger(11);//Integer.MAX_VALUE is 10 digit long
+    }
+
+    enum TestEnum {
+        A,
+        B
     }
 }
