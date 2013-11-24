@@ -1,11 +1,11 @@
 package io.generators.core;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableList.copyOf;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.ImmutableList.copyOf;
 
 /**
  * Generates randomly picked element from collection
@@ -20,7 +20,8 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
         this.items = copyOf(checkNotNull(items, "Collection for generation can't be null"));
     }
 
-    public RandomFromCollectionGenerator(T[] items) {
+    @SafeVarargs
+    public RandomFromCollectionGenerator(T... items) {
         this.items = copyOf(checkNotNull(items, "Collection for generation can't be null"));
     }
 
