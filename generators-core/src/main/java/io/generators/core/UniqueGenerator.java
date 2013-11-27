@@ -18,7 +18,7 @@ public class UniqueGenerator<T> implements Generator<T> {
     private static final int DEFAULT_NUMBER_OF_RETRIES = 10;
     private final Generator<T> delegate;
     private final int numberOfRetries;
-    private Set<T> alreadyGenerated = newHashSet();
+    private final Set<T> alreadyGenerated = newHashSet();
 
     /**
      * Creates unique generator with 10 retries

@@ -35,23 +35,23 @@ public final class Generators {
     }
 
     public static <T> Iterable<T> iterable(int limit, Generator<T> generator) {
-        return new GeneratorIterable<T>(limit, generator);
+        return new GeneratorIterable<>(limit, generator);
     }
 
     public static <T> Generator<T> biased(int percentageBiasTowardsFirst, Generator<T> firstGenerator, Generator<T> secondGenerator) {
-        return new BiasedGenerator<T>(percentageBiasTowardsFirst, firstGenerator, secondGenerator);
+        return new BiasedGenerator<>(percentageBiasTowardsFirst, firstGenerator, secondGenerator);
     }
 
     public static <T> List<T> listFrom(int limit, Generator<T> generator) {
-        return FluentIterable.from(new GeneratorIterable<T>(generator)).limit(limit).toList();
+        return FluentIterable.from(new GeneratorIterable<>(generator)).limit(limit).toList();
     }
 
     public static <T> Set<T> setFrom(int limit, Generator<T> generator) {
-        return FluentIterable.from(new GeneratorIterable<T>(generator)).limit(limit).toSet();
+        return FluentIterable.from(new GeneratorIterable<>(generator)).limit(limit).toSet();
     }
 
     public static <T extends Enum<T>> Generator<T> randomEnum(Class<T> enumClass) {
-        return new RandomEnumGenerator<T>(enumClass);
+        return new RandomEnumGenerator<>(enumClass);
     }
 
     public static Generator<Integer> nDigitPositiveInteger(int digits) {

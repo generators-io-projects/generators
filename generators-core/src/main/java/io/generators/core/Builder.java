@@ -7,7 +7,7 @@ package io.generators.core;
 public interface Builder<T> {
     /**
      * Builds <code>%lt;T&gt;</></code>
-     * @return
+     * @return built type %lt;T&gt;
      */
     T build();
 }

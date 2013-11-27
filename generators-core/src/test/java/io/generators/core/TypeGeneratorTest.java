@@ -12,7 +12,7 @@ public class TypeGeneratorTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    public static final String MESSAGE = "Some message";
+    private static final String MESSAGE = "Some message";
 
     static class AlwaysThrowsException {
         public AlwaysThrowsException(Integer i) {
@@ -144,9 +144,7 @@ public class TypeGeneratorTest {
 
             Salary salary = (Salary) o;
 
-            if (!wholeAmount.equals(salary.wholeAmount)) return false;
-
-            return true;
+            return wholeAmount.equals(salary.wholeAmount);
         }
 
         @Override

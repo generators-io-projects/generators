@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Iterable that encapsulates generator
  */
 public class GeneratorIterable<T> implements Iterable<T> {
-    public static final int INFINITE_SIZE = -1;
+    private static final int INFINITE_SIZE = -1;
     private final int size;
     private final Generator<T> generator;
 
