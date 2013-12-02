@@ -14,7 +14,7 @@ public class RandomClosedRangeGenerator<T extends Comparable<T>> implements Gene
     /**
      * Creates range generator that delegates generation endpoints to its delegate
      *
-     * @param delegate
+     * @param delegate actual generator that generates values
      * @throws NullPointerException when <code>delegate</code> is null
      */
     public RandomClosedRangeGenerator(Generator<T> delegate) {
