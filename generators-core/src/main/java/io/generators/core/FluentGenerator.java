@@ -1,5 +1,8 @@
 package io.generators.core;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+
 /**
  * Provides fluent interface for creating generators
  */
@@ -25,6 +28,14 @@ public class FluentGenerator<T> implements Generator<T> {
 
     public Iterable<T> toIterable(int size) {
         return new GeneratorIterable<>(size, delegate);
+    }
+
+    public <G> FluentGenerator<G> transform(Function<T, G> function) {
+        return from(new TransformingGenerator<>(delegate, function));
+    }
+
+    public FluentGenerator<T> filter(Predicate<T> predicate) {
+        return from(new FilteringGenerator<>(delegate, predicate));
     }
 
     @Override

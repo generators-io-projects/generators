@@ -1,11 +1,14 @@
 package io.generators.core;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
+import static io.generators.core.Generators.ofInstance;
 import static io.generators.core.Generators.positiveInts;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -66,5 +69,37 @@ public class FluentGeneratorTest {
             amountsSet.add(amount);
         }
         assertThat(amountsSet, hasSize(5));
+    }
+
+    @Test
+    public void shouldApplyTransformingGenerator() {
+        //Given
+        FluentGenerator<Long> generator = FluentGenerator.from(ofInstance(-5))
+                .transform(new Function<Integer, Long>() {
+                    @Override
+                    public Long apply(Integer input) {
+                        return (long) input * input;
+                    }
+                });
+
+        //When & Then
+        assertThat(generator.next(), is(25L));
+    }
+
+    @Test
+    public void shouldApplyFilter() {
+        //Given
+        FluentGenerator<String> generator = FluentGenerator.from(new RandomFromCollectionGenerator<>("a", "b", "B", "c"))
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean apply(String input) {
+                        return !"b".equalsIgnoreCase(input);
+                    }
+                });
+
+        //When & Then
+        for (int i = 0; i < 10; i++) {
+            assertThat(generator.next(), isOneOf("a", "c"));
+        }
     }
 }
