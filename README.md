@@ -6,7 +6,9 @@ It is especially usefull for testing.
 
 Releases
 -------------
-First snapshot was published: 
+First release (0.1) is planned for the end of the December 2013. Interfaces/packages/library dependencies are not stable yet and may change. Therefore major release version is 0.x not 1.x
+
+Snapshots are published/updated quite frequently: 
 
     io.generators:generators-core:0.1-SNAPSHOT
 
