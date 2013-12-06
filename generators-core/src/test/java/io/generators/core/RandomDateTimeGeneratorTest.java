@@ -7,7 +7,6 @@ import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 
 /**
@@ -23,11 +22,9 @@ public class RandomDateTimeGeneratorTest {
 
         //When & Then
         for (int i = 0; i < 100; i++) {
-            DateTime next = dateTimeGenerator.next();
-            dateTimeSet.add(next);
-            System.out.println(next);
+            dateTimeSet.add(dateTimeGenerator.next());
         }
 
-        assertThat(dateTimeSet, hasSize(greaterThan(90)));
+        assertThat(dateTimeSet, hasSize(100));
     }
 }
