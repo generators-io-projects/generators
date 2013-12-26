@@ -14,7 +14,7 @@ public final class MorePredicates {
     private MorePredicates() {
     }
 
-
+    @SafeVarargs
     public static <T> Predicate<T> in(T first, T... rest) {
         Collection<T> allowed = ImmutableList.<T>builder()
                 .add(first)
@@ -24,6 +24,7 @@ public final class MorePredicates {
         return Predicates.in(allowed);
     }
 
+    @SafeVarargs
     public static <T> Predicate<T> notIn(T first, T... rest) {
         return Predicates.not(in(first, rest));
     }
