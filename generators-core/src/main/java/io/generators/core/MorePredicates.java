@@ -1,13 +1,14 @@
 package io.generators.core;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
  * Utility class with convenience methods for creation of predicates
  */
-public final class Predicates {
+public final class MorePredicates {
 
-    private Predicates() {
+    private MorePredicates() {
     }
 
     public static <T> Predicate<T> in(T first, T... rest) {
@@ -15,6 +16,6 @@ public final class Predicates {
     }
 
     public static <T> Predicate<T> notIn(T first, T... rest) {
-        return com.google.common.base.Predicates.not(in(first, rest));
+        return Predicates.not(in(first, rest));
     }
 }
