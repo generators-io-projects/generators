@@ -3,6 +3,9 @@ package io.generators.core;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Set;
@@ -13,8 +16,15 @@ import static io.generators.core.Generators.positiveInts;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class FluentGeneratorTest {
+
+    @Mock
+    private Consumer<Integer> firstConsumer;
+    @Mock
+    private Consumer<Integer> secondConsumer;
 
     @Test
     public void shouldCreateGenerator() {
@@ -26,6 +36,46 @@ public class FluentGeneratorTest {
 
         //Then
         assertThat(integer, notNullValue());
+    }
+
+    @Test
+    public void shouldPublishGeneratedValuesToConsumers() {
+        //Given
+        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(firstConsumer, secondConsumer);
+
+        //When
+        Integer integer = generator.next();
+
+        //Then
+        verify(firstConsumer).consume(integer);
+        verify(secondConsumer).consume(integer);
+
+        //When
+        Integer integer2 = generator.next();
+
+        //Then
+        verify(firstConsumer).consume(integer2);
+        verify(secondConsumer).consume(integer2);
+    }
+
+    @Test
+    public void shouldPublishGeneratedValuesToConsumersList() {
+        //Given
+        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(asList(firstConsumer, secondConsumer));
+
+        //When
+        Integer integer = generator.next();
+
+        //Then
+        verify(firstConsumer).consume(integer);
+        verify(secondConsumer).consume(integer);
+
+        //When
+        Integer integer2 = generator.next();
+
+        //Then
+        verify(firstConsumer).consume(integer2);
+        verify(secondConsumer).consume(integer2);
     }
 
     @Test
