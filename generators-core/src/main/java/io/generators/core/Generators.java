@@ -1,11 +1,15 @@
 package io.generators.core;
 
+import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static io.generators.core.MoreFunctions.toLowerCase;
+import static io.generators.core.MoreFunctions.toUpperCase;
 import static java.lang.Math.pow;
 
 /**
@@ -13,6 +17,7 @@ import static java.lang.Math.pow;
  */
 public final class Generators {
     public static final Generator<Integer> positiveInts = new RandomPositiveIntegerGenerator();
+    public static final Generator<Long> positiveLongs = new RandomPositiveLongGenerator();
     public static final Generator<String> alphabetic10 = new RandomAlphabeticStringGenerator(10);
 
     private Generators() {
@@ -21,6 +26,15 @@ public final class Generators {
     public static Generator<Integer> positiveInts(int from, int to) {
         return new RandomPositiveIntegerGenerator(from, to);
     }
+
+    public static Generator<Long> positiveLongs(long from, long to) {
+        return new RandomPositiveLongGenerator(from, to);
+    }
+
+    public static <T> Generator<T> broadcasting(Generator<T> delegate, List<Consumer<T>> consumers) {
+        return new BroadcastingGenerator<>(delegate, consumers);
+    }
+
 
     public static Generator<String> alphabetic(int length) {
         return new RandomAlphabeticStringGenerator(length);
@@ -59,5 +73,25 @@ public final class Generators {
         int from = (int) pow(10, digits - 1);
         int to = (int) pow(10, digits);
         return new RandomPositiveIntegerGenerator(from, to);
+    }
+
+    public static <F,T> Generator<T> transform(Generator<F>  delegate, Function<F,T> transformation) {
+        return new TransformingGenerator<>(delegate,transformation);
+    }
+
+    public static Generator<String> upperCase(GeneratorOfInstance<String> delegate, Locale locale) {
+        return transform(delegate, toUpperCase(locale));
+    }
+
+    public static Generator<String> upperCase(GeneratorOfInstance<String> delegate) {
+        return transform(delegate, toUpperCase());
+    }
+
+    public static Generator<String> lowerCase(GeneratorOfInstance<String> delegate) {
+        return transform(delegate, toLowerCase());
+    }
+
+    public static Generator<String> lowerCase(Generator<String> delegate, Locale locale) {
+        return transform(delegate, toLowerCase(locale));
     }
 }

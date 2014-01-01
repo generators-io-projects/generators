@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
@@ -13,6 +14,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class GeneratorsTest {
+    public static final String UPPERCASE = "ABC";
+    public static final String LOWERCASE = "abc";
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -111,6 +115,55 @@ public class GeneratorsTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Number of digits must be between 1  and 10");
         Generators.nDigitPositiveInteger(11);//Integer.MAX_VALUE is 10 digit long
+    }
+
+    @Test
+    public void shouldConvertGeneratedValuesToUpperCase() throws Exception {
+        // Given
+        Generator<String> generator = Generators.upperCase(new GeneratorOfInstance<>(LOWERCASE), Locale.ENGLISH);
+
+        // When
+        String upper = generator.next();
+
+        // Then
+        assertThat(upper, is(LOWERCASE.toUpperCase()));
+    }
+
+    @Test
+    public void shouldUseDefaultLocaleIfNotProvided() throws Exception {
+        // Given
+        Generator<String> generator = Generators.upperCase(new GeneratorOfInstance<>(LOWERCASE));
+
+        // When
+        String upper = generator.next();
+
+        // Then
+        assertThat(upper, is(LOWERCASE.toUpperCase()));
+    }
+
+
+    @Test
+    public void shouldConvertGeneratedValuesToLowerCase() throws Exception {
+        // Given
+        Generator<String> generator = Generators.lowerCase(new GeneratorOfInstance<>(UPPERCASE), Locale.ENGLISH);
+
+        // When
+        String lower = generator.next();
+
+        // Then
+        assertThat(lower, is("abc"));
+    }
+
+    @Test
+    public void shouldConvertToLowerCaseAndUseDefaultLocaleIfNotProvided() throws Exception {
+        // Given
+        Generator<String> generator = Generators.lowerCase(new GeneratorOfInstance<>(UPPERCASE));
+
+        // When
+        String lower = generator.next();
+
+        // Then
+        assertThat(lower, is(UPPERCASE.toLowerCase()));
     }
 
     enum TestEnum {
