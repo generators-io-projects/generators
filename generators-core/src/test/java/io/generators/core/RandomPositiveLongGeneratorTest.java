@@ -10,43 +10,33 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class RandomPositiveIntegerGeneratorTest {
+public class RandomPositiveLongGeneratorTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void shouldReturnPositiveIntegerBetweenZeroAndIntegerMAX() {
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator();
+    public void shouldReturnPositiveLongBetweenZeroAndIntegerMAX() {
+        Generator<Long> randomPositiveLongGenerator = new RandomPositiveLongGenerator();
         for (int i = 0; i < 100; i++) {
-            assertThat(randomPositiveIntegerGenerator.next(), greaterThanOrEqualTo(0));
+            assertThat(randomPositiveLongGenerator.next(), greaterThanOrEqualTo(0L));
         }
     }
 
     @Test
     public void shouldReturnPositiveIntegerBetweenFromInclusiveAndToExclusive() {
-        int from = 13;
-        int to = 20;
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator(from, to);
-        Set<Integer> generatedNumbers = newHashSet();
+        long from = 13;
+        long to = 20;
+        Generator<Long> randomPositiveLongGenerator = new RandomPositiveLongGenerator(from, to);
+        Set<Long> generatedNumbers = newHashSet();
         for (int i = 0; i < 100; i++) {
-            Integer integer = randomPositiveIntegerGenerator.next();
-            assertThat(integer, greaterThanOrEqualTo(from));
-            assertThat(integer, lessThan(to));
-            generatedNumbers.add(integer);
+            Long generatedLong = randomPositiveLongGenerator.next();
+            assertThat(generatedLong, greaterThanOrEqualTo(from));
+            assertThat(generatedLong, lessThan(to));
+            generatedNumbers.add(generatedLong);
         }
 
         assertThat(generatedNumbers, hasSize(greaterThan(5))); //with 100 numbers it "should" be more than five
-    }
-
-    @Test
-    public void shouldReturnSameNumberEveryTime() {
-        int from = 13;
-        int to = from + 1;
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator(from, to);
-        for (int i = 0; i < 100; i++) {
-            assertThat(randomPositiveIntegerGenerator.next(), is(from));
-        }
     }
 
     @Test
@@ -54,7 +44,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be >= 0");
 
-        new RandomPositiveIntegerGenerator(-1, 20);
+        new RandomPositiveLongGenerator(-1, 20);
     }
 
     @Test
@@ -62,7 +52,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveIntegerGenerator(5, 5);
+        new RandomPositiveLongGenerator(5, 5);
     }
 
     @Test
@@ -70,7 +60,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveIntegerGenerator(12, 11);
+        new RandomPositiveLongGenerator(12, 11);
     }
 
 }

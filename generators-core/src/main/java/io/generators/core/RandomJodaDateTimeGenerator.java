@@ -2,8 +2,6 @@ package io.generators.core;
 
 import org.joda.time.DateTime;
 
-import java.security.SecureRandom;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.generators.core.Generators.ofInstance;
@@ -106,18 +104,4 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
         }
     }
 
-    /**
-     * Provides method to generate positive longs in range [0,n)
-     */
-    private class PositiveLongRandom extends SecureRandom {
-
-        public long nextLong(long n) {
-            long bits, val;
-            do {
-                bits = ((long) (next(31)) << 31) + next(32); //generating positive long + int
-                val = bits % n;
-            } while (bits - val + (n - 1) < 0);
-            return val;
-        }
-    }
 }
