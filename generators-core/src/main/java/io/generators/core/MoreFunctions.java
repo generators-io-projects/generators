@@ -28,4 +28,12 @@ public final class MoreFunctions {
     public static Function<String, String> toLowerCase(Locale locale) {
         return new ToLowerCaseFunction(locale);
     }
+
+    /**
+     * Function that appends Luhn Check Digit to the provided input number
+     * @return  Function that appends Luhn Check Digit to the provided input number
+     */
+    public static Function<Long, Long> appendLuhnCheckDigit() {
+        return new LuhnCheckDigitFunction();
+    }
 }
