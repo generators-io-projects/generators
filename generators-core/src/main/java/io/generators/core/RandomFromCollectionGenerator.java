@@ -18,6 +18,7 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
 
     /**
      * Creates generator that selects values from <code>items</code> passed in
+     *
      * @param items to select from
      * @throws NullPointerException when collection passed in is null
      */
@@ -27,6 +28,7 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
 
     /**
      * Creates generator that selects values from <code>items</code> passed in
+     *
      * @param items to select from
      * @throws NullPointerException when array passed in is null
      */

@@ -1,7 +1,6 @@
 package io.generators.core;
 
 import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,6 +11,7 @@ public class LuhnCheckDigitFunction implements Function<Long, Long> {
 
     /**
      * Appends check digit to {@code partialAccountNumber}
+     *
      * @param partialAccountNumber number without check digit
      * @return number with check digit
      * @throws java.lang.NullPointerException if partialAccountNumber is null
@@ -35,7 +35,7 @@ public class LuhnCheckDigitFunction implements Function<Long, Long> {
             isEven = !isEven;
         }
 
-        int check = total * 9 % 10 ;
+        int check = total * 9 % 10;
 
         return partialAccountNumber * 10 + check;
     }

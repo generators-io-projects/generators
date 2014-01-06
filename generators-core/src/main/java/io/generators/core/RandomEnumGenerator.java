@@ -1,8 +1,8 @@
 package io.generators.core;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Generates Enum randomly selected from set of all Enums of type <code>T</code>

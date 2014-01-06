@@ -1,8 +1,5 @@
 package io.generators.core;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
@@ -18,13 +15,12 @@ public class RandomPositiveLongGenerator implements Generator<Long> {
      * Creates generator that generates longs between from (inclusive) and to (exclusive).
      *
      * @param from inclusive lower bound
-     * @param to exclusive upper bound
-     *
+     * @param to   exclusive upper bound
      * @throws IllegalArgumentException when <code>from</code> is less then zero or <code>to</code> is less then or equal to <code>from</code>
      */
     public RandomPositiveLongGenerator(long from, long to) {
-        checkArgument(from >= 0,"from must be >= 0");
-        checkArgument(from < to,"from must be < to");
+        checkArgument(from >= 0, "from must be >= 0");
+        checkArgument(from < to, "from must be < to");
         this.from = from;
         this.to = to;
     }

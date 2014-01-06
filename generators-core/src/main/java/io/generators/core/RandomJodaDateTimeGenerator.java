@@ -9,7 +9,7 @@ import static org.joda.time.DateTime.now;
 
 /**
  * Generates random {@link org.joda.time.DateTime}.
- *
+ * <p/>
  * When no constructor parameters are provided DateTime are generated in range +- 100 years.
  * It also supports generating random DateTime in custom range, future and past DateTimes.
  */
@@ -43,7 +43,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      * Created instance generates DateTime in range  provided by generators <code>from</code> to <code>to</code>
      *
      * @param from generator of the from/lower bound DateTime
-     * @param to generator of the to/upper bound DateTime
+     * @param to   generator of the to/upper bound DateTime
      */
     public RandomJodaDateTimeGenerator(Generator<DateTime> from, Generator<DateTime> to) {
         this.from = from;
@@ -52,6 +52,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
 
     /**
      * Created instance generates future DateTimes up to 100 years in future including now
+     *
      * @return instance that generates future DateTimes up to 100 years in future including now
      */
     public static Generator<DateTime> futureDates() {
@@ -60,7 +61,8 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
 
     /**
      * Created instance generates future DateTimes up to <code>to</code> in future including now
-     * @return  instance that generates future DateTimes up to <code>to</code> in future including now
+     *
+     * @return instance that generates future DateTimes up to <code>to</code> in future including now
      */
     public static Generator<DateTime> futureDates(DateTime to) {
         return new RandomJodaDateTimeGenerator(new DurationFromNow(ZERO_DURAION), ofInstance(to));
@@ -68,6 +70,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
 
     /**
      * Created instance generates DateTimes in past from before 100 years up to now
+     *
      * @return instance that generates DateTimes in past from before 100 years up to now
      */
     public static Generator<DateTime> pastDates() {
@@ -76,6 +79,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
 
     /**
      * Created instance generates DateTimes in past from <code>from</code> up to now
+     *
      * @return instance that generates DateTimes in past from <code>from</code> up to now
      */
     public static Generator<DateTime> pastDates(DateTime from) {

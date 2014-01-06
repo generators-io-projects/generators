@@ -7,6 +7,7 @@ public interface Generator<T> {
 
     /**
      * Returns generated &lt;T&gt;
+     *
      * @return generated <T>
      */
     public T next();

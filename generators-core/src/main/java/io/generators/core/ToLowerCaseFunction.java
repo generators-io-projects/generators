@@ -12,6 +12,7 @@ public class ToLowerCaseFunction implements Function<String, String> {
 
     /**
      * Creates function that uses specified {@link java.util.Locale} for case conversion
+     *
      * @param locale to used during case conversion
      */
     public ToLowerCaseFunction(Locale locale) {

@@ -8,7 +8,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Iterable that encapsulates generator.
- *
+ * <p/>
  * Iterating over this iterable multiple times may not yield same results depending on backing generator
  */
 public class GeneratorIterable<T> implements Iterable<T> {
@@ -44,6 +44,7 @@ public class GeneratorIterable<T> implements Iterable<T> {
 
     /**
      * Provides iterator over this iterable
+     *
      * @return iterator over this iterable
      */
     @Override

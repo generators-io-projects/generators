@@ -7,7 +7,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Generates a random string whose length is the <code>length</code> of characters
  * specified.
- *
+ * <p/>
  * <p>Characters will be chosen from the set of alphabetic
  * characters.</p>
  */
@@ -21,7 +21,7 @@ public class RandomAlphabeticStringGenerator implements Generator<String> {
      * @throws java.lang.IllegalArgumentException when length is &lt; 0
      */
     public RandomAlphabeticStringGenerator(int length) {
-        checkArgument(length >= 0,"length must be >= 0");
+        checkArgument(length >= 0, "length must be >= 0");
         this.length = length;
     }
 

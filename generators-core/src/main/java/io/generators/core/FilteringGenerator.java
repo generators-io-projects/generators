@@ -16,7 +16,6 @@ public class FilteringGenerator<T> implements Generator<T> {
      *
      * @param delegate  actual generator
      * @param predicate actual filter
-     *
      * @throws java.lang.NullPointerException when delegate or predicate are null
      */
     public FilteringGenerator(Generator<T> delegate, Predicate<T> predicate) {

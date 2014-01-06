@@ -53,7 +53,8 @@ public final class MoreFunctions {
 
     /**
      * Function that appends Luhn Check Digit to the provided input number
-     * @return  Function that appends Luhn Check Digit to the provided input number
+     *
+     * @return Function that appends Luhn Check Digit to the provided input number
      */
     public static Function<Long, Long> appendLuhnCheckDigit() {
         return new LuhnCheckDigitFunction();

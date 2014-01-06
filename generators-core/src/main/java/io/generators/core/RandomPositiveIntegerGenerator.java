@@ -18,13 +18,12 @@ public class RandomPositiveIntegerGenerator implements Generator<Integer> {
      * Creates generator that generates integers between from (inclusive) and to (exclusive).
      *
      * @param from inclusive lower bound
-     * @param to exclusive upper bound
-     *
+     * @param to   exclusive upper bound
      * @throws IllegalArgumentException when <code>from</code> is less then zero or <code>to</code> is less then or equal to <code>from</code>
      */
     public RandomPositiveIntegerGenerator(int from, int to) {
-        checkArgument(from >= 0,"from must be >= 0");
-        checkArgument(from < to,"from must be < to");
+        checkArgument(from >= 0, "from must be >= 0");
+        checkArgument(from < to, "from must be < to");
         this.from = from;
         this.to = to;
     }

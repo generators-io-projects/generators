@@ -8,6 +8,7 @@ public class GeneratorOfInstance<T> implements Generator<T> {
 
     /**
      * Creates Generator always generating the {@code constantValue}
+     *
      * @param constantValue to be generated
      */
     public GeneratorOfInstance(T constantValue) {

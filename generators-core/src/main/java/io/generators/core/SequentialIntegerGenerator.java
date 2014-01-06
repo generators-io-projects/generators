@@ -18,7 +18,9 @@ public class SequentialIntegerGenerator implements Generator<Integer> {
         this.value = new AtomicInteger(startAt);
     }
 
-    /** Creates generator generating integers starting from 1 */
+    /**
+     * Creates generator generating integers starting from 1
+     */
     public SequentialIntegerGenerator() {
         this(1);
     }

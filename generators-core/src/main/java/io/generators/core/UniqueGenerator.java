@@ -22,6 +22,7 @@ public class UniqueGenerator<T> implements Generator<T> {
 
     /**
      * Creates unique generator with 10 retries
+     *
      * @param delegate actual generator
      * @throws NullPointerException when <code>delegate</code> generator is null
      */
@@ -31,9 +32,10 @@ public class UniqueGenerator<T> implements Generator<T> {
 
     /**
      * Creates unique generator with custom <code>numberOfRetries</code>
-     * @param delegate actual generator
+     *
+     * @param delegate        actual generator
      * @param numberOfRetries number of retries before throwing {@link IllegalStateException}
-     * @throws NullPointerException when <code>delegate</code> generator is null
+     * @throws NullPointerException     when <code>delegate</code> generator is null
      * @throws IllegalArgumentException when <code>numberOfRetries</code> is not > 0
      */
     public UniqueGenerator(Generator<T> delegate, int numberOfRetries) {

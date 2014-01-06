@@ -16,9 +16,10 @@ public final class MorePredicates {
 
     /**
      * Predicate that returns true when input value is memeber of set consisting of {@code first} and {@code rest}
+     *
      * @param first element
-     * @param rest of the elements
-     * @param <T> type of elements
+     * @param rest  of the elements
+     * @param <T>   type of elements
      * @return the in predicate
      */
     @SafeVarargs
@@ -33,9 +34,10 @@ public final class MorePredicates {
 
     /**
      * Predicate that returns true when input value is memeber of set consisting of {@code first} and {@code rest}
+     *
      * @param first element
-     * @param rest of the elements
-     * @param <T> type of elements
+     * @param rest  of the elements
+     * @param <T>   type of elements
      * @return the not in predicate
      */
     @SafeVarargs
