@@ -10,6 +10,7 @@ public class FromBuilderGenerator<T> implements Generator<T> {
 
     /**
      * Creates generator that delegates to builder
+     *
      * @param builder builder building the &lt;T&gt;
      * @throws NullPointerException when the builder is null
      */

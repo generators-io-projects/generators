@@ -10,10 +10,16 @@ import java.util.Locale;
 public class ToUpperCaseFunction implements Function<String, String> {
     private final Locale locale;
 
+    /**
+     * Creates function that uses provided {@link java.util.Locale} for case conversion
+     */
     public ToUpperCaseFunction(Locale locale) {
         this.locale = locale;
     }
 
+    /**
+     * Creates function that uses default {@link java.util.Locale} for case conversion
+     */
     public ToUpperCaseFunction() {
         this(Locale.getDefault());
     }

@@ -16,6 +16,16 @@ public class BiasedGenerator<T> implements Generator<T> {
     private final Generator<T> secondGenerator;
     private final Random random = new Random();
 
+
+    /**
+     * Creates generator
+     *
+     * @param percentageBiasTowardsFirst percentage how often is the first generator selected
+     * @param firstGenerator             generator that is selected according to  {@code percentageBiasTowardsFirst}
+     * @param secondGenerator            second generator
+     * @throws java.lang.IllegalArgumentException if the percentage bias is not between 0 and 100 inclusive
+     * @throws java.lang.NullPointerException     if first or second generator is null
+     */
     public BiasedGenerator(int percentageBiasTowardsFirst, Generator<T> firstGenerator, Generator<T> secondGenerator) {
         checkArgument(percentageBiasTowardsFirst >= 0 && percentageBiasTowardsFirst <= 100, "bias must be between 0 and 100");
         this.percentageBiasTowardsFirst = percentageBiasTowardsFirst;

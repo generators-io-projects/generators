@@ -7,7 +7,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Generates positive integers (including zero) between from (inclusive) and to (exclusive).
- * Maximum up to {@see Integer.MAX_VALUE}
+ * Maximum up to {@link Integer#MAX_VALUE}
  */
 public class RandomPositiveIntegerGenerator implements Generator<Integer> {
     private final int from;
@@ -30,7 +30,7 @@ public class RandomPositiveIntegerGenerator implements Generator<Integer> {
     }
 
     /**
-     * Creates generator that generates integers between from 0 and {@see Integer.MAX_VALUE}.
+     * Creates generator that generates integers between from 0 and {@link Integer#MAX_VALUE}.
      */
     public RandomPositiveIntegerGenerator() {
         this(0, Integer.MAX_VALUE);

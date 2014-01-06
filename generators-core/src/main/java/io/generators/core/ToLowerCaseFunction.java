@@ -10,10 +10,17 @@ import java.util.Locale;
 public class ToLowerCaseFunction implements Function<String, String> {
     private Locale locale;
 
+    /**
+     * Creates function that uses specified {@link java.util.Locale} for case conversion
+     * @param locale to used during case conversion
+     */
     public ToLowerCaseFunction(Locale locale) {
         this.locale = locale;
     }
 
+    /**
+     * Creates function that uses default {@link java.util.Locale} for case conversion
+     */
     public ToLowerCaseFunction() {
         this(Locale.getDefault());
     }

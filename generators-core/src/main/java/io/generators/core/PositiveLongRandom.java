@@ -11,7 +11,7 @@ class PositiveLongRandom extends SecureRandom {
      * Returns a pseudorandom, uniformly distributed {@code int} value
      * between 0 (inclusive) and the specified value (exclusive), drawn from
      * this random number generator's sequence.  The general contract of
-     * {@code nextInt} is that one {@code int} value in the specified range
+     * {@code nextLong} is that one {@code long} value in the specified range
      * is pseudorandomly generated and returned.
      */
     public long nextLong(long n) {

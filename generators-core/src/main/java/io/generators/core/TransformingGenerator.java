@@ -16,6 +16,7 @@ public class TransformingGenerator<F, T> implements Generator<T> {
      *
      * @param delegate actual generator
      * @param function to be used for transformation
+     * @throws java.lang.NullPointerException when delegate or function are null
      */
     public TransformingGenerator(Generator<F> delegate, Function<F, T> function) {
         this.delegate = checkNotNull(delegate, "Delegate generator can't be null");

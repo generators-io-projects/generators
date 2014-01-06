@@ -10,7 +10,7 @@ import static com.google.common.collect.ImmutableList.copyOf;
 /**
  * Generates randomly selected element from collection/array
  *
- * @param <T>
+ * @param <T> type of the collection's elements
  */
 public class RandomFromCollectionGenerator<T> implements Generator<T> {
     private final List<T> items;

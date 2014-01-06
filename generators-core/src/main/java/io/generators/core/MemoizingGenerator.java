@@ -14,7 +14,7 @@ public class MemoizingGenerator<T> implements Generator<T> {
     private boolean initialized;
 
     /**
-     * Creates generator that memorizes value first value returned by the delegate and then always returns that same value
+     * Creates generator that memorizes first value returned by the delegate and then always returns that same value
      *
      * @param delegate the delegate generator
      * @throws NullPointerException when delegate is null

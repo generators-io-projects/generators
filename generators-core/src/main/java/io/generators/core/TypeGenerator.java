@@ -24,6 +24,8 @@ public class TypeGenerator<T, V> implements Generator<T> {
      *
      * @param typeClass  class of the Tiny Type
      * @param valueGenerator generator for value wrapped by TinyType
+     *
+     * @throws java.lang.NullPointerException when {@code typeCass}  or {@code valueGenerator }is null
      */
     public TypeGenerator(Class<T> typeClass, Generator<V> valueGenerator) {
         this.typeClass = checkNotNull(typeClass, "typeClass");

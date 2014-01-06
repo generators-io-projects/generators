@@ -7,7 +7,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Generates positive longs (including zero) between from (inclusive) and to (exclusive).
- * Maximum up to {@see Long.MAX_VALUE}
+ * Maximum up to {@link Long#MAX_VALUE}
  */
 public class RandomPositiveLongGenerator implements Generator<Long> {
     private final long from;
@@ -15,7 +15,7 @@ public class RandomPositiveLongGenerator implements Generator<Long> {
     private final PositiveLongRandom random = new PositiveLongRandom();
 
     /**
-     * Creates generator that generates integers between from (inclusive) and to (exclusive).
+     * Creates generator that generates longs between from (inclusive) and to (exclusive).
      *
      * @param from inclusive lower bound
      * @param to exclusive upper bound
@@ -30,7 +30,7 @@ public class RandomPositiveLongGenerator implements Generator<Long> {
     }
 
     /**
-     * Creates generator that generates integers between from 0 and {@see Integer.MAX_VALUE}.
+     * Creates generator that generates integers between from 0 and {@link Integer#MAX_VALUE}.
      */
     public RandomPositiveLongGenerator() {
         this(0, Long.MAX_VALUE);

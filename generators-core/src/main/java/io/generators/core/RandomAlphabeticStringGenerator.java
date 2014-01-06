@@ -14,6 +14,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class RandomAlphabeticStringGenerator implements Generator<String> {
     private final int length;
 
+    /**
+     * Creates generator of random string of specified {@code length}
+     *
+     * @param length of the generated string
+     * @throws java.lang.IllegalArgumentException when length is &lt; 0
+     */
     public RandomAlphabeticStringGenerator(int length) {
         checkArgument(length >= 0,"length must be >= 0");
         this.length = length;

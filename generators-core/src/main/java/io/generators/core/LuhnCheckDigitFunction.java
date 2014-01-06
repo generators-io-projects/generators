@@ -1,14 +1,24 @@
 package io.generators.core;
 
 import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Appends Luhn Check Digit to the supplied input,
  */
 public class LuhnCheckDigitFunction implements Function<Long, Long> {
 
+    /**
+     * Appends check digit to {@code partialAccountNumber}
+     * @param partialAccountNumber number without check digit
+     * @return number with check digit
+     * @throws java.lang.NullPointerException if partialAccountNumber is null
+     */
     @Override
     public Long apply(Long partialAccountNumber) {
+        checkNotNull(partialAccountNumber, "partialAccountNumber can't be null");
         boolean isEven = true;
         int total = 0;
         Long temp = partialAccountNumber;

@@ -13,18 +13,40 @@ public final class MoreFunctions {
         //prevent instantiation
     }
 
+    /**
+     * Creates function that converts inputs to uppercase using provided {@code locale}
+     *
+     * @param locale to use for case conversion
+     * @return the function
+     */
     public static Function<String, String> toUpperCase(Locale locale) {
         return new ToUpperCaseFunction(locale);
     }
 
+    /**
+     * Creates function that converts inputs to uppercase using default {@link java.util.Locale}
+     *
+     * @return the function
+     */
     public static Function<String, String> toUpperCase() {
         return new ToUpperCaseFunction();
     }
 
+    /**
+     * Creates function that converts inputs to lowercase using default {@link java.util.Locale}
+     *
+     * @return the function
+     */
     public static Function<String, String> toLowerCase() {
         return new ToLowerCaseFunction();
     }
 
+    /**
+     * Creates function that converts inputs to lowercase using provided {@code locale}
+     *
+     * @param locale to use for case conversion
+     * @return the function
+     */
     public static Function<String, String> toLowerCase(Locale locale) {
         return new ToLowerCaseFunction(locale);
     }
