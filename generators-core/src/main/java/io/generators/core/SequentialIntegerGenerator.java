@@ -3,7 +3,9 @@ package io.generators.core;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Generates integers in ascending order
+ * Generates {@code Integer} in ascending order
+ *
+ * @author David Bliss
  */
 public class SequentialIntegerGenerator implements Generator<Integer> {
 

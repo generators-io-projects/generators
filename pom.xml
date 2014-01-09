@@ -42,6 +42,11 @@
             <name>Tomas Klubal</name>
             <email>tomas.klubal@generators.io</email>
         </developer>
+        <developer>
+            <id>blissd</id>
+            <name>David Bliss</name>
+            <email>github@davidbliss.me</email>
+        </developer>
     </developers>
 
     <build>
