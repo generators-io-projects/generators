@@ -99,7 +99,7 @@ But maybe for this test case we don't care what is the branch number but for som
 The second builder generates values, that were not set when configuring builder, during invocation of the build() method.
 So if we want two accounts in the same branch but with different account number, the code can look like this:
 
-    AccountBuilder1 accountBuilder = new AccountBuilder1().branchNumber(new BranchNumber("1234"));
+    AccountBuilder2 accountBuilder = new AccountBuilder2().branchNumber(new BranchNumber("1234"));
     Account sourceAccount = accountBuilder.next();
     Account destinationAccount = accountBuilder.build();
 
@@ -129,7 +129,7 @@ Where second type of builder is implemented like this:
 The third builder generates values using generators during invocation of the build() method as well as second builder
 but does not need to perform any extra checks so it is easy to set name to null
 
-    AccountBuilder1 accountBuilder = new AccountBuilder1().missingName().branchNumber(new BranchNumber("1234"));
+    AccountBuilder3 accountBuilder = new AccountBuilder3().missingName().branchNumber(new BranchNumber("1234"));
     Account sourceAccount = accountBuilder.next();
     Account destinationAccount = accountBuilder.build();
 
