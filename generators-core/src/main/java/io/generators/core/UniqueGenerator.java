@@ -13,6 +13,8 @@ import static com.google.common.collect.Sets.newHashSet;
  * If delegate generator can't generate unique value it retries the generation n times and then fails with {@link IllegalStateException}.
  * <p/>
  * Default value for n = 10, which is very small number for small collections
+ *
+ * @author Tomas Klubal
  */
 public class UniqueGenerator<T> implements Generator<T> {
     private static final int DEFAULT_NUMBER_OF_RETRIES = 10;

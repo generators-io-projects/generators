@@ -2,6 +2,8 @@ package io.generators.core;
 
 /**
  * Generates the instance passed into the constructor.Null value is allowed.
+ *
+ * @author Tomas Klubal
  */
 public class GeneratorOfInstance<T> implements Generator<T> {
     private final T constantValue;

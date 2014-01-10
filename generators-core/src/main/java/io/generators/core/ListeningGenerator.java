@@ -6,6 +6,8 @@ package io.generators.core;
  * <li>If a value hasn't yet been consumed, then next() returns null</li>
  * <li>If multiple values have been consumed, then only the most recent is returned by next()</li>
  * </ul>
+ *
+ * @author Tomas Klubal
  */
 public class ListeningGenerator<T> implements Generator<T>, Consumer<T> {
 

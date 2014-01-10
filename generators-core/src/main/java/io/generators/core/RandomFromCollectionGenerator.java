@@ -11,6 +11,8 @@ import static com.google.common.collect.ImmutableList.copyOf;
  * Generates randomly selected element from collection/array
  *
  * @param <T> type of the collection's elements
+ *
+ * @author Tomas Klubal
  */
 public class RandomFromCollectionGenerator<T> implements Generator<T> {
     private final List<T> items;

@@ -10,6 +10,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Provides fluent interface for creating generators
+ *
+ * @author Tomas Klubal
  */
 public class FluentGenerator<T> implements Generator<T> {
 

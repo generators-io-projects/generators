@@ -7,6 +7,8 @@ import static com.google.common.collect.Range.closed;
 
 /**
  * Generates random closed range of Comparable%lt;T%gt;
+ *
+ * @author Tomas Klubal
  */
 public class RandomClosedRangeGenerator<T extends Comparable<T>> implements Generator<Range<T>> {
     private final Generator<T> delegate;

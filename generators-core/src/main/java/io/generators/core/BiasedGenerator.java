@@ -9,6 +9,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Generates values using <code>firstGenerator</code> or <code>secondGenerator</code> depending on percentage bias specified
  *
  * @param <T> type of the generated instance
+ *
+ * @author Tomas Klubal
  */
 public class BiasedGenerator<T> implements Generator<T> {
     private final int percentageBiasTowardsFirst;

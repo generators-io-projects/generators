@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * Utility class with convenience methods for creation of predicates
+ *
+ * @author David Bliss
  */
 public final class MorePredicates {
 

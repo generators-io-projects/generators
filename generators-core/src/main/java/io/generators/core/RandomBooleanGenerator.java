@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * Generates true and false randomly
+ *
+ * @author David Bliss
  */
 public class RandomBooleanGenerator implements Generator<Boolean> {
 

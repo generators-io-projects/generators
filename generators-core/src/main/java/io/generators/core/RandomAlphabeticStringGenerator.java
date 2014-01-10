@@ -10,6 +10,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * <p/>
  * <p>Characters will be chosen from the set of alphabetic
  * characters.</p>
+ *
+ * @author Tomas Klubal
  */
 public class RandomAlphabeticStringGenerator implements Generator<String> {
     private final int length;

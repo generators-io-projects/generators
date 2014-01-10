@@ -8,6 +8,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Generates positive integers (including zero) between from (inclusive) and to (exclusive).
  * Maximum up to {@link Integer#MAX_VALUE}
+ *
+ * @author Tomas Klubal
  */
 public class RandomPositiveIntegerGenerator implements Generator<Integer> {
     private final int from;

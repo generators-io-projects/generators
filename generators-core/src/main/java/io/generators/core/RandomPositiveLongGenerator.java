@@ -5,6 +5,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Generates positive longs (including zero) between from (inclusive) and to (exclusive).
  * Maximum up to {@link Long#MAX_VALUE}
+ *
+ * @author Tomas Klubal
  */
 public class RandomPositiveLongGenerator implements Generator<Long> {
     private final long from;

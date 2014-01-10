@@ -10,6 +10,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Iterable that encapsulates generator.
  * <p/>
  * Iterating over this iterable multiple times may not yield same results depending on backing generator
+ *
+ * @author Tomas Klubal
  */
 public class GeneratorIterable<T> implements Iterable<T> {
     private static final int INFINITE_SIZE = -1;

@@ -6,6 +6,8 @@ import java.util.Locale;
 
 /**
  * Converts string to upper case. Handles null <code>input</code>s
+ *
+ * @author Tomas Klubal
  */
 public class ToLowerCaseFunction implements Function<String, String> {
     private Locale locale;

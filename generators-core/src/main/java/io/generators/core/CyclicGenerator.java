@@ -9,6 +9,8 @@ import java.util.Iterator;
  * Generator that cycles over the given elements infinitely always in the same order.
  *
  * @param <T> type of the elements
+ *
+ * @author David Bliss
  */
 public class CyclicGenerator<T> implements Generator<T> {
     private final Iterator<T> iterator;

@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 
 /**
  * Provides method to generate positive longs in range [0,n)
+ *
+ * @author Tomas Klubal
  */
 class PositiveLongRandom extends SecureRandom {
 

@@ -6,6 +6,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Generates random alphanumeric string of specified <code>length</code>
+ *
+ * @author Tomas Klubal
  */
 public class RandomAlphanumericGenerator implements Generator<String> {
     private final int length;

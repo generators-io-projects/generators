@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Generates type <code>&lt;T&gt;</code> using builder passed in
+ *
+ * @author Tomas Klubal
  */
 public class FromBuilderGenerator<T> implements Generator<T> {
     private final Builder<T> builder;

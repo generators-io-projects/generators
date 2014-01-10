@@ -2,6 +2,9 @@ package io.generators.core;
 
 /**
  * Generates instance of &lt;T&gt;
+ *
+ * @author Tomas Klubal
+ * @author David Bliss
  */
 public interface Generator<T> {
 

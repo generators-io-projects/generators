@@ -15,6 +15,8 @@ import static java.lang.Math.pow;
 
 /**
  * Utility class listing all generators for convenience
+ *
+ * @author Tomas Klubal
  */
 public final class Generators {
     public static final Generator<Integer> positiveInts = new RandomPositiveIntegerGenerator();

@@ -12,6 +12,8 @@ import static org.joda.time.DateTime.now;
  * <p/>
  * When no constructor parameters are provided DateTime are generated in range +- 100 years.
  * It also supports generating random DateTime in custom range, future and past DateTimes.
+ *
+ * @author Tomas Klubal
  */
 public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
     private static final int YEAR_BOUND = 100;

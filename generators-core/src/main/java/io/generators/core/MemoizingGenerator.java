@@ -6,6 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Generator that memorizes generated value indefinitely and returns it
+ *
+ * @author Tomas Klubal
  */
 public class MemoizingGenerator<T> implements Generator<T> {
     private final ReentrantLock lock = new ReentrantLock();

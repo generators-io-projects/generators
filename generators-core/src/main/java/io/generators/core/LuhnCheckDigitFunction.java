@@ -6,6 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Appends Luhn Check Digit to the supplied input,
+ *
+ * @author Tomas Klubal
  */
 public class LuhnCheckDigitFunction implements Function<Long, Long> {
 

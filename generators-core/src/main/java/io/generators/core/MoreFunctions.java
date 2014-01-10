@@ -6,6 +6,8 @@ import java.util.Locale;
 
 /**
  * Convenience utility class that simplifies construction of {@link com.google.common.base.Function}s used in generators
+ *
+ * @author Tomas Klubal
  */
 public final class MoreFunctions {
 

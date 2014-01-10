@@ -6,6 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Generates Enum randomly selected from set of all Enums of type <code>T</code>
+ *
+ * @author Tomas Klubal
  */
 public class RandomEnumGenerator<T extends Enum<T>> implements Generator<T> {
     private final T[] enums;
