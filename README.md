@@ -66,7 +66,7 @@ When build() method is called second time new instance of the Account but with s
 Builder has to be reconfigured to generate instance that is not equal to the first one:
 
     AccountBuilder1 accountBuilder = new AccountBuilder1();
-    Account sourceAccount = accountBuilder.accountNumber(new AccountNumber(945678)).next();
+    Account sourceAccount = accountBuilder.accountNumber(new AccountNumber(945678)).build();
     Account destinationAccount = accountBuilder.accountNumber(new AccountNumber(1234567890)).build();
 
 Where builder is implemented like this:
@@ -100,7 +100,7 @@ The second builder generates values, that were not set when configuring builder,
 So if we want two accounts in the same branch but with different account number, the code can look like this:
 
     AccountBuilder2 accountBuilder = new AccountBuilder2().branchNumber(new BranchNumber("1234"));
-    Account sourceAccount = accountBuilder.next();
+    Account sourceAccount = accountBuilder.build();
     Account destinationAccount = accountBuilder.build();
 
 This won't be possible with first builder. However with this type of builder it is harder to support creating account with null name (possible with some inner flags in the builder)
@@ -130,7 +130,7 @@ The third builder generates values using generators during invocation of the bui
 but does not need to perform any extra checks so it is easy to set name to null
 
     AccountBuilder3 accountBuilder = new AccountBuilder3().missingName().branchNumber(new BranchNumber("1234"));
-    Account sourceAccount = accountBuilder.next();
+    Account sourceAccount = accountBuilder.build();
     Account destinationAccount = accountBuilder.build();
 
 Where third type of builder is implemented like this:
