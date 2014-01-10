@@ -1,8 +1,18 @@
 io.generators
 ==========
 
-io.generators is a small framework for generating random/sequential primitives and types in Java. 
-It is especially useful for testing.
+io.generators is a tiny framework for generating random or sequential primitives and types in Java.
+
+It supports generating unique values, constants, performing filtering or transformation of the generated values, broadcasting the values to consumers and more.
+New generators can be implemented on top of alredy existing generators or as direct implementation of the simple '''Generator<T>''' interface.
+
+Generators are especially useful for testing:
+ -   Randomly generated values mean that there is no need to tear-down test data when running integration tests and allow tests to commit there transactions if required.
+ -   Populated DB is also closer to real life scenario and may highlight bugs in the code
+ -   When used in builders they allow to focus on configuration of only those values that are important for the test which makes tests easier to read and maintain
+ -   When used consistently across services they ensure that that all generated values are conforming to the same format (i.e. account numbers)
+ -   They make refactoring easier as it is easier to make format or type changes (i.e. all my tests now need to use branch number that is 6 digits long not 4, or the the amount is no longer BigDecimal but Amount type)
+
 
 Releases
 -------------
