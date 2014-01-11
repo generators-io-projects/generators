@@ -13,5 +13,5 @@ public interface Generator<T> {
      *
      * @return generated <T>
      */
-    public T next();
+    T next();
 }

@@ -97,7 +97,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
         return new DateTime(millis);
     }
 
-    private static class DurationFromNow implements Generator<DateTime> {
+    private static final class DurationFromNow implements Generator<DateTime> {
         private final int yearBound;
 
         private DurationFromNow(int numberOfYears) {
