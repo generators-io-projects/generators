@@ -34,6 +34,7 @@
     <scm>
         <url>https://github.com/generators-io-projects/generators</url>
         <connection>scm:git:https://github.com/generators-io-projects/generators</connection>
+        <developerConnection>scm:git:https://github.com/generators-io-projects/generators</developerConnection>
     </scm>
 
     <developers>
