@@ -16,11 +16,15 @@ Generators are especially useful for testing:
 
 Releases
 -------------
-First release (0.1) is planned for the middle of the January 2014. Interfaces/packages/library dependencies are not stable yet and may change. Therefore major release version is 0.x not 1.x
+First candidate release was released to the central maven repository on the 12/02/2014. 
+
+    io.generators:generators-core:1.0-RC1
+
+Release 1.0 is planned for the end of the January 2014. 
 
 Snapshots are published/updated quite frequently: 
 
-    io.generators:generators-core:0.1-SNAPSHOT
+    io.generators:generators-core:1.0-RC1-SNAPSHOT
 
 The snapshot is hosted at Sonatype Nexus Snapshot repository so in order to get it add following reppository to your pom:
 
