@@ -97,7 +97,7 @@ public class FluentGenerator<T> implements Generator<T> {
      * @see io.generators.core.BroadcastingGenerator
      */
     @SafeVarargs
-    public final Generator<T> publishTo(final Consumer<T> first, Consumer<T>... others) {
+    public final FluentGenerator<T> publishTo(final Consumer<T> first, Consumer<T>... others) {
         final ImmutableList<Consumer<T>> consumers = ImmutableList.<Consumer<T>>builder()
                 .add(first)
                 .add(others)
@@ -113,7 +113,7 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return Broadcasting FluentGenerator
      * @see io.generators.core.BroadcastingGenerator
      */
-    public Generator<T> publishTo(final List<Consumer<T>> consumers) {
+    public FluentGenerator<T> publishTo(final List<Consumer<T>> consumers) {
         return from(new BroadcastingGenerator<>(delegate, consumers));
     }
 

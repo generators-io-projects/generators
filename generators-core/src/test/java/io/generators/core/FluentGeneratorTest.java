@@ -61,7 +61,7 @@ public class FluentGeneratorTest {
     @Test
     public void shouldPublishGeneratedValuesToConsumersList() {
         //Given
-        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(asList(firstConsumer, secondConsumer));
+        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(asList(firstConsumer, secondConsumer)).unique();
 
         //When
         Integer integer = generator.next();
