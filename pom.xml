@@ -10,7 +10,7 @@
 
     <groupId>io.generators</groupId>
     <artifactId>generators</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <modules>
         <module>generators-core</module>
     </modules>
@@ -33,7 +33,7 @@
         <url>https://github.com/generators-io-projects/generators</url>
         <connection>scm:git:https://github.com/generators-io-projects/generators</connection>
         <developerConnection>scm:git:https://github.com/generators-io-projects/generators</developerConnection>
-      <tag>1.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
