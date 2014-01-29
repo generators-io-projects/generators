@@ -16,17 +16,17 @@ Generators are especially useful for testing:
 
 Releases
 -------------
-First candidate release was released to the central maven repository on the 12/02/2014. 
+First release was released to the central maven repository on the 29/01/2014.
 
-    io.generators:generators-core:1.0-RC1
+    io.generators:generators-core:1.0
 
-Release 1.0 is planned for the end of the January 2014. 
+Release 1.1 will contain some more generators (composite, padding, truncating) and maybe also basic implementation of the maven-generators-module for generating builders.
 
 Snapshots are published/updated quite frequently: 
 
-    io.generators:generators-core:1.0-RC1-SNAPSHOT
+    io.generators:generators-core:1.1-SNAPSHOT
 
-The snapshot is hosted at Sonatype Nexus Snapshot repository so in order to get it add following reppository to your pom:
+The snapshot is hosted at Sonatype Nexus Snapshot repository so in order to get it add following repository to your pom:
 
     <repositories>
         <repository>
