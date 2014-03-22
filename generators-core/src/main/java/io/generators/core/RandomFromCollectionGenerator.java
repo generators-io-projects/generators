@@ -1,12 +1,13 @@
 package io.generators.core;
 
+import com.google.common.collect.ImmutableList;
+
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableList.copyOf;
 
 /**
  * Generates randomly selected element from collection/array
@@ -25,18 +26,18 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
      * @throws NullPointerException when collection passed in is null
      */
     public RandomFromCollectionGenerator(@Nonnull Collection<T> items) {
-        this.items = copyOf(checkNotNull(items, "Collection for generation can't be null"));
+        this.items = ImmutableList.copyOf(checkNotNull(items, "Collection for generation can't be null"));
     }
 
     /**
      * Creates generator that selects values from <code>items</code> passed in
      *
      * @param items to select from
-     * @throws NullPointerException when array passed in is null
+     * @throws NullPointerException when array passed in is nullF
      */
     @SafeVarargs
     public RandomFromCollectionGenerator(T... items) {
-        this.items = copyOf(checkNotNull(items, "Collection for generation can't be null"));
+        this.items = ImmutableList.copyOf(checkNotNull(items, "Collection for generation can't be null"));
     }
 
     @Override
