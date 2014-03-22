@@ -3,6 +3,7 @@ package io.generators.core;
 import com.google.common.base.Function;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Locale;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -30,7 +31,8 @@ public class ToUpperCaseFunction implements Function<String, String> {
     }
 
     @Override
-    public String apply(String input) {
+    @Nullable
+    public String apply(@Nullable String input) {
         return input == null ? null : input.toUpperCase(locale);
     }
 }
