@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Range;
 
 import javax.annotation.Nonnull;
@@ -27,11 +28,11 @@ public class RandomClosedRangeGenerator<T extends Comparable<T>> implements Gene
 
     @Override
     public Range<T> next() {
-        T lower = delegate.next();
-        T maybeUpper = delegate.next();
-        T upper = lower.compareTo(maybeUpper) < 0 ? maybeUpper : lower;
+        T a = delegate.next();
+        T b = delegate.next();
+        T lower = Ordering.natural().min(a, b);
+        T upper = Ordering.natural().max(a, b);
 
-        lower = upper == maybeUpper ? lower : maybeUpper;
         return closed(lower, upper);
     }
 }
