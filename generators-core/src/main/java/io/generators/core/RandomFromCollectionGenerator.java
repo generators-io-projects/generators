@@ -12,7 +12,6 @@ import static com.google.common.collect.ImmutableList.copyOf;
  * Generates randomly selected element from collection/array
  *
  * @param <T> type of the collection's elements
- *
  * @author Tomas Klubal
  */
 public class RandomFromCollectionGenerator<T> implements Generator<T> {
@@ -43,8 +42,12 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
     @Override
     public T next() {
         int maximumIndex = items.size() - 1;
-        return maximumIndex > 0
-                ? items.get(random.nextInt(maximumIndex))
-                : maximumIndex == 0 ? items.get(0) : null;
+        if (maximumIndex > 0) {
+            return items.get(random.nextInt(maximumIndex));
+        } else if (maximumIndex == 0) {
+            return items.get(0);
+        } else {
+            return null;
+        }
     }
 }
