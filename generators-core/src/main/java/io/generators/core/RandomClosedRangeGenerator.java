@@ -2,6 +2,8 @@ package io.generators.core;
 
 import com.google.common.collect.Range;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Range.closed;
 
@@ -19,7 +21,7 @@ public class RandomClosedRangeGenerator<T extends Comparable<T>> implements Gene
      * @param delegate actual generator that generates values
      * @throws NullPointerException when <code>delegate</code> is null
      */
-    public RandomClosedRangeGenerator(Generator<T> delegate) {
+    public RandomClosedRangeGenerator(@Nonnull Generator<T> delegate) {
         this.delegate = checkNotNull(delegate, "Delegate generator can't be null");
     }
 

@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -28,7 +29,7 @@ public class BiasedGenerator<T> implements Generator<T> {
      * @throws java.lang.IllegalArgumentException if the percentage bias is not between 0 and 100 inclusive
      * @throws java.lang.NullPointerException     if first or second generator is null
      */
-    public BiasedGenerator(int percentageBiasTowardsFirst, Generator<T> firstGenerator, Generator<T> secondGenerator) {
+    public BiasedGenerator(int percentageBiasTowardsFirst, @Nonnull Generator<T> firstGenerator, @Nonnull Generator<T> secondGenerator) {
         checkArgument(percentageBiasTowardsFirst >= 0 && percentageBiasTowardsFirst <= 100, "bias must be between 0 and 100");
         this.percentageBiasTowardsFirst = percentageBiasTowardsFirst;
         this.firstGenerator = checkNotNull(firstGenerator, "First generator must not be null");

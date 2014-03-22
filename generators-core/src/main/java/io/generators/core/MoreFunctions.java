@@ -2,7 +2,10 @@ package io.generators.core;
 
 import com.google.common.base.Function;
 
+import javax.annotation.Nonnull;
 import java.util.Locale;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Convenience utility class that simplifies construction of {@link com.google.common.base.Function}s used in generators
@@ -21,8 +24,8 @@ public final class MoreFunctions {
      * @param locale to use for case conversion
      * @return the function
      */
-    public static Function<String, String> toUpperCase(Locale locale) {
-        return new ToUpperCaseFunction(locale);
+    public static Function<String, String> toUpperCase(@Nonnull Locale locale) {
+        return new ToUpperCaseFunction(checkNotNull(locale));
     }
 
     /**

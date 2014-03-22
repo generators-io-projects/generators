@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -17,7 +18,7 @@ public class RandomEnumGenerator<T extends Enum<T>> implements Generator<T> {
      * @param enumClass class of the enum for which to generate the enums
      * @throws NullPointerException when <code>enumClass</code> is null
      */
-    public RandomEnumGenerator(Class<T> enumClass) {
+    public RandomEnumGenerator(@Nonnull Class<T> enumClass) {
         this.enums = checkNotNull(enumClass, "enumClass must not be null").getEnumConstants();
         this.random = ThreadLocalRandom.current();
     }

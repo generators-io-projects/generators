@@ -2,7 +2,10 @@ package io.generators.core;
 
 import com.google.common.base.Function;
 
+import javax.annotation.Nonnull;
 import java.util.Locale;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Converts string to upper case. Handles null <code>input</code>s
@@ -17,8 +20,8 @@ public class ToLowerCaseFunction implements Function<String, String> {
      *
      * @param locale to used during case conversion
      */
-    public ToLowerCaseFunction(Locale locale) {
-        this.locale = locale;
+    public ToLowerCaseFunction(@Nonnull Locale locale) {
+        this.locale = checkNotNull(locale);
     }
 
     /**

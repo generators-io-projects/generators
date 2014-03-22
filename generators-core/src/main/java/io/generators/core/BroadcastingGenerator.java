@@ -2,6 +2,7 @@ package io.generators.core;
 
 import com.google.common.collect.ImmutableList;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,7 +23,7 @@ public class BroadcastingGenerator<T> implements Generator<T> {
      * @param consumers consumers listening for generation, the list is defensively copied
      * @throws java.lang.NullPointerException when delegate is null, consumers is null or one of the elements in consumer list is null
      */
-    public BroadcastingGenerator(Generator<T> delegate, List<Consumer<T>> consumers) {
+    public BroadcastingGenerator(@Nonnull Generator<T> delegate, List<Consumer<T>> consumers) {
         this.delegate = checkNotNull(delegate, "delegate can't be null");
         this.consumers = ImmutableList.copyOf(consumers);
     }
@@ -37,7 +38,7 @@ public class BroadcastingGenerator<T> implements Generator<T> {
      * @throws java.lang.NullPointerException when delegate is null, first consumer is null or one of the elements in others consumers is null
      */
     @SafeVarargs
-    public BroadcastingGenerator(Generator<T> delegate, Consumer<T> first, Consumer<T>... others) {
+    public BroadcastingGenerator(@Nonnull Generator<T> delegate, @Nonnull Consumer<T> first, @Nonnull Consumer<T>... others) {
         this(delegate, ImmutableList.<Consumer<T>>builder()
                 .add(first)
                 .add(others)

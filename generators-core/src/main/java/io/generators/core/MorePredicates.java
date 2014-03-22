@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
@@ -25,7 +26,7 @@ public final class MorePredicates {
      * @return the in predicate
      */
     @SafeVarargs
-    public static <T> Predicate<T> in(T first, T... rest) {
+    public static <T> Predicate<T> in(@Nonnull T first, @Nonnull T... rest) {
         Collection<T> allowed = ImmutableList.<T>builder()
                 .add(first)
                 .add(rest)
@@ -43,7 +44,7 @@ public final class MorePredicates {
      * @return the not in predicate
      */
     @SafeVarargs
-    public static <T> Predicate<T> notIn(T first, T... rest) {
+    public static <T> Predicate<T> notIn(@Nonnull T first, @Nonnull T... rest) {
         return Predicates.not(in(first, rest));
     }
 }

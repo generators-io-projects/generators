@@ -2,6 +2,8 @@ package io.generators.core;
 
 import org.joda.time.DateTime;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.generators.core.Generators.ofInstance;
@@ -35,7 +37,7 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      *
      * @throws IllegalArgumentException when {@code from} is after {@code to}
      */
-    public RandomJodaDateTimeGenerator(DateTime from, DateTime to) {
+    public RandomJodaDateTimeGenerator(@Nonnull DateTime from, @Nonnull DateTime to) {
         checkArgument(checkNotNull(from, "Date 'from' can't be null").isBefore(checkNotNull(to, "Date 'to' can't be null")) || from.isEqual(to), "Date 'from' can't be after date 'to'");
         this.from = ofInstance(from);
         this.to = ofInstance(to);
@@ -47,9 +49,9 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      * @param from generator of the from/lower bound DateTime
      * @param to   generator of the to/upper bound DateTime
      */
-    public RandomJodaDateTimeGenerator(Generator<DateTime> from, Generator<DateTime> to) {
-        this.from = from;
-        this.to = to;
+    public RandomJodaDateTimeGenerator(@Nonnull Generator<DateTime> from, @Nonnull Generator<DateTime> to) {
+        this.from = checkNotNull(from);
+        this.to = checkNotNull(to);
     }
 
     /**
@@ -66,8 +68,8 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      *
      * @return instance that generates future DateTimes up to <code>to</code> in future including now
      */
-    public static Generator<DateTime> futureDates(DateTime to) {
-        return new RandomJodaDateTimeGenerator(new DurationFromNow(ZERO_DURAION), ofInstance(to));
+    public static Generator<DateTime> futureDates(@Nonnull DateTime to) {
+        return new RandomJodaDateTimeGenerator(new DurationFromNow(ZERO_DURAION), ofInstance(checkNotNull(to)));
     }
 
     /**
@@ -84,8 +86,8 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      *
      * @return instance that generates DateTimes in past from <code>from</code> up to now
      */
-    public static Generator<DateTime> pastDates(DateTime from) {
-        return new RandomJodaDateTimeGenerator(ofInstance(from), new DurationFromNow(ZERO_DURAION));
+    public static Generator<DateTime> pastDates(@Nonnull DateTime from) {
+        return new RandomJodaDateTimeGenerator(ofInstance(checkNotNull(from)), new DurationFromNow(ZERO_DURAION));
     }
 
     @Override

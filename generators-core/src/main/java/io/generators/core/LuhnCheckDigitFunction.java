@@ -2,6 +2,8 @@ package io.generators.core;
 
 import com.google.common.base.Function;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -19,7 +21,7 @@ public class LuhnCheckDigitFunction implements Function<Long, Long> {
      * @throws java.lang.NullPointerException if partialAccountNumber is null
      */
     @Override
-    public Long apply(Long partialAccountNumber) {
+    public Long apply(@Nonnull Long partialAccountNumber) {
         checkNotNull(partialAccountNumber, "partialAccountNumber can't be null");
         boolean isEven = true;
         int total = 0;

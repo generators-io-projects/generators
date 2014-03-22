@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 
@@ -29,7 +30,7 @@ public class TypeGenerator<T, V> implements Generator<T> {
      * @throws java.lang.NullPointerException when {@code typeCass}  or {@code valueGenerator }is null
      *
      */
-    public TypeGenerator(Class<T> typeClass, Generator<V> valueGenerator) {
+    public TypeGenerator(@Nonnull Class<T> typeClass, @Nonnull Generator<V> valueGenerator) {
         this.typeClass = checkNotNull(typeClass, "typeClass");
         this.valueGenerator = checkNotNull(valueGenerator, "valueGenerator");
     }

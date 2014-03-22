@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -24,7 +25,7 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
      * @param items to select from
      * @throws NullPointerException when collection passed in is null
      */
-    public RandomFromCollectionGenerator(Collection<T> items) {
+    public RandomFromCollectionGenerator(@Nonnull Collection<T> items) {
         this.items = copyOf(checkNotNull(items, "Collection for generation can't be null"));
     }
 

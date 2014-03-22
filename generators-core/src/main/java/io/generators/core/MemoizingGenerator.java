@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -21,7 +22,7 @@ public class MemoizingGenerator<T> implements Generator<T> {
      * @param delegate the delegate generator
      * @throws NullPointerException when delegate is null
      */
-    public MemoizingGenerator(Generator<T> delegate) {
+    public MemoizingGenerator(@Nonnull Generator<T> delegate) {
         this.delegate = checkNotNull(delegate, "Delegate generator can't be null");
     }
 

@@ -4,6 +4,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -17,7 +19,7 @@ public class FluentGenerator<T> implements Generator<T> {
 
     private final Generator<T> delegate;
 
-    private FluentGenerator(Generator<T> delegate) {
+    private FluentGenerator(@Nonnull Generator<T> delegate) {
         this.delegate = checkNotNull(delegate, "delegate can't be null");
     }
 
@@ -29,7 +31,8 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return FluentGenerator
      * @throws java.lang.NullPointerException when {@code delegate} is null
      */
-    public static <T> FluentGenerator<T> from(Generator<T> generator) {
+    @CheckReturnValue
+    public static <T> FluentGenerator<T> from(@Nonnull Generator<T> generator) {
         return new FluentGenerator<>(generator);
     }
 
@@ -38,6 +41,7 @@ public class FluentGenerator<T> implements Generator<T> {
      *
      * @return FluentGenerator generating only unique values
      */
+    @CheckReturnValue
     public FluentGenerator<T> unique() {
         return from(new UniqueGenerator<>(delegate));
     }
@@ -50,8 +54,9 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return FluentGenerator generating <K>
      * @see io.generators.core.TypeGenerator
      */
-    public <K> FluentGenerator<K> ofType(Class<K> type) {
-        return from(Generators.ofType(type, delegate));
+    @CheckReturnValue
+    public <K> FluentGenerator<K> ofType(@Nonnull Class<K> type) {
+        return from(Generators.ofType(checkNotNull(type), delegate));
     }
 
     /**
@@ -73,8 +78,9 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return FluentGenerator doing transformation
      * @see io.generators.core.TransformingGenerator
      */
-    public <G> FluentGenerator<G> transform(Function<T, G> function) {
-        return from(new TransformingGenerator<>(delegate, function));
+    @CheckReturnValue
+    public <G> FluentGenerator<G> transform(@Nonnull Function<T, G> function) {
+        return from(new TransformingGenerator<>(delegate, checkNotNull(function)));
     }
 
     /**
@@ -84,8 +90,9 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return Filtering FluentGenerator
      * @see io.generators.core.FilteringGenerator
      */
-    public FluentGenerator<T> filter(Predicate<T> predicate) {
-        return from(new FilteringGenerator<>(delegate, predicate));
+    @CheckReturnValue
+    public FluentGenerator<T> filter(@Nonnull Predicate<T> predicate) {
+        return from(new FilteringGenerator<>(delegate, checkNotNull(predicate)));
     }
 
     /**
@@ -97,7 +104,8 @@ public class FluentGenerator<T> implements Generator<T> {
      * @see io.generators.core.BroadcastingGenerator
      */
     @SafeVarargs
-    public final FluentGenerator<T> publishTo(final Consumer<T> first, Consumer<T>... others) {
+    @CheckReturnValue
+    public final FluentGenerator<T> publishTo(@Nonnull  Consumer<T> first, @Nonnull Consumer<T>... others) {
         final ImmutableList<Consumer<T>> consumers = ImmutableList.<Consumer<T>>builder()
                 .add(first)
                 .add(others)
@@ -113,8 +121,9 @@ public class FluentGenerator<T> implements Generator<T> {
      * @return Broadcasting FluentGenerator
      * @see io.generators.core.BroadcastingGenerator
      */
-    public FluentGenerator<T> publishTo(final List<Consumer<T>> consumers) {
-        return from(new BroadcastingGenerator<>(delegate, consumers));
+    @CheckReturnValue
+    public FluentGenerator<T> publishTo(@Nonnull List<Consumer<T>> consumers) {
+        return from(new BroadcastingGenerator<>(delegate, checkNotNull(consumers)));
     }
 
     @Override

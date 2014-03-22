@@ -3,6 +3,7 @@ package io.generators.core;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 
+import javax.annotation.Nonnull;
 import java.util.Iterator;
 
 /**
@@ -23,7 +24,7 @@ public class CyclicGenerator<T> implements Generator<T> {
      * @throws java.lang.NullPointerException when first or one of the rest elements is null
      */
     @SafeVarargs
-    public CyclicGenerator(T first, T... rest) {
+    public CyclicGenerator(@Nonnull T first, @Nonnull T... rest) {
         ImmutableList<T> values = ImmutableList.<T>builder()
                 .add(first)
                 .add(rest)

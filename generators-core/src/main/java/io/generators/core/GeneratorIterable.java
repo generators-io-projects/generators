@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -26,7 +27,7 @@ public class GeneratorIterable<T> implements Iterable<T> {
      * @throws java.lang.IllegalArgumentException when limit is &lt; 0
      * @throws java.lang.NullPointerException     when generator is null
      */
-    public GeneratorIterable(int limit, Generator<T> generator) {
+    public GeneratorIterable(int limit, @Nonnull Generator<T> generator) {
         checkArgument(limit >= 0, "limit must be >= 0 but it was %s", limit);
         this.size = limit;
         this.generator = checkNotNull(generator, "generator");
@@ -39,7 +40,7 @@ public class GeneratorIterable<T> implements Iterable<T> {
      * @throws java.lang.IllegalArgumentException when limit is &lt; 0
      * @throws java.lang.NullPointerException     when generator is null
      */
-    public GeneratorIterable(Generator<T> generator) {
+    public GeneratorIterable(@Nonnull Generator<T> generator) {
         this.size = INFINITE_SIZE;
         this.generator = checkNotNull(generator, "generator");
     }

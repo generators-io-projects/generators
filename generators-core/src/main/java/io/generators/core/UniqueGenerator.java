@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 import static com.google.common.base.Joiner.on;
@@ -28,7 +29,7 @@ public class UniqueGenerator<T> implements Generator<T> {
      * @param delegate actual generator
      * @throws NullPointerException when <code>delegate</code> generator is null
      */
-    public UniqueGenerator(Generator<T> delegate) {
+    public UniqueGenerator(@Nonnull Generator<T> delegate) {
         this(delegate, DEFAULT_NUMBER_OF_RETRIES);
     }
 
@@ -40,7 +41,7 @@ public class UniqueGenerator<T> implements Generator<T> {
      * @throws NullPointerException     when <code>delegate</code> generator is null
      * @throws IllegalArgumentException when <code>numberOfRetries</code> is not > 0
      */
-    public UniqueGenerator(Generator<T> delegate, int numberOfRetries) {
+    public UniqueGenerator(@Nonnull Generator<T> delegate, int numberOfRetries) {
         this.delegate = checkNotNull(delegate, "Delegate generator can't be null");
         checkArgument(numberOfRetries > 0, "Number of retries must be at least 1");
         this.numberOfRetries = numberOfRetries;

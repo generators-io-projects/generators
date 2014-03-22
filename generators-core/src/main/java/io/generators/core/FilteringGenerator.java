@@ -2,6 +2,8 @@ package io.generators.core;
 
 import com.google.common.base.Predicate;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -20,7 +22,7 @@ public class FilteringGenerator<T> implements Generator<T> {
      * @param predicate actual filter
      * @throws java.lang.NullPointerException when delegate or predicate are null
      */
-    public FilteringGenerator(Generator<T> delegate, Predicate<T> predicate) {
+    public FilteringGenerator(@Nonnull Generator<T> delegate, @Nonnull Predicate<T> predicate) {
         this.delegate = checkNotNull(delegate, "Delegate generator can't be null");
         this.predicate = checkNotNull(predicate, "Predicate can't be null");
 
