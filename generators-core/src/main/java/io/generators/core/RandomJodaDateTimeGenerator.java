@@ -1,19 +1,22 @@
 package io.generators.core;
 
-import org.joda.time.DateTime;
-
-import javax.annotation.Nonnull;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.generators.core.Generators.ofInstance;
 import static org.joda.time.DateTime.now;
 
+import javax.annotation.Nonnull;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 /**
- * Generates random {@link org.joda.time.DateTime}.
+ * Generates random {@link org.joda.time.DateTime} in the time zone of the from date.
  * <p/>
- * When no constructor parameters are provided DateTime are generated in range +- 100 years.
- * It also supports generating random DateTime in custom range, future and past DateTimes.
+ * When no constructor parameters are provided DateTime are generated in range +- 100 years in the default time zone
+ * It also supports generating random DateTime in custom range, future and past DateTimes in cases where from DateTime is not provided it uses default time zone.
+ * Time zone can be explicitly set to desired time zone using {@link #withTimeZone(org.joda.time.DateTimeZone)}
+ *
  *
  * @author Tomas Klubal
  */
@@ -23,13 +26,15 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
     private final PositiveLongRandom random = new PositiveLongRandom();
     private final Generator<DateTime> from;
     private final Generator<DateTime> to;
+    private final DateTimeZone timeZone;
 
     /**
-     * Created instance generates DateTime in range -+ 100 years
+     * Created instance generates DateTime in range -+ 100 years in the default time zone
+     *
+     * @see org.joda.time.DateTimeZone#getDefault()
      */
     public RandomJodaDateTimeGenerator() {
-        this.from = new DurationFromNow(-YEAR_BOUND);
-        this.to = new DurationFromNow(+YEAR_BOUND);
+        this(new DurationFromNow(-YEAR_BOUND), new DurationFromNow(+YEAR_BOUND));
     }
 
     /**
@@ -38,9 +43,9 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      * @throws IllegalArgumentException when {@code from} is after {@code to}
      */
     public RandomJodaDateTimeGenerator(@Nonnull DateTime from, @Nonnull DateTime to) {
+        this(ofInstance(from), ofInstance(to));
+        //Late check to allow reuse of constructor
         checkArgument(checkNotNull(from, "Date 'from' can't be null").isBefore(checkNotNull(to, "Date 'to' can't be null")) || from.isEqual(to), "Date 'from' can't be after date 'to'");
-        this.from = ofInstance(from);
-        this.to = ofInstance(to);
     }
 
     /**
@@ -50,8 +55,13 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
      * @param to   generator of the to/upper bound DateTime
      */
     public RandomJodaDateTimeGenerator(@Nonnull Generator<DateTime> from, @Nonnull Generator<DateTime> to) {
+        this(from, to, null);
+    }
+
+    private RandomJodaDateTimeGenerator(Generator<DateTime> from, Generator<DateTime> to, DateTimeZone timeZone) {
         this.from = checkNotNull(from);
         this.to = checkNotNull(to);
+        this.timeZone = timeZone;
     }
 
     /**
@@ -92,11 +102,22 @@ public class RandomJodaDateTimeGenerator implements Generator<DateTime> {
 
     @Override
     public DateTime next() {
-        long lowerBound = from.next().getMillis();
+        DateTime fromTime = from.next();
+        long lowerBound = fromTime.getMillis();
         long upperBound = to.next().getMillis();
 
         long millis = random.nextLong(upperBound - lowerBound + 1) + lowerBound;
-        return new DateTime(millis);
+        return new DateTime(millis, timeZone == null ? fromTime.getZone() : timeZone);
+    }
+
+    /**
+     * Creates new instance of this generator that will generate DateTime using provided TimeZone.
+     *
+     * @param timeZone to be used when generating the date
+     * @return new generator with specific time zone
+     */
+    public Generator<DateTime> withTimeZone(DateTimeZone timeZone) {
+        return new RandomJodaDateTimeGenerator(from, to, timeZone);
     }
 
     private static final class DurationFromNow implements Generator<DateTime> {

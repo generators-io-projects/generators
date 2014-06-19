@@ -1,19 +1,24 @@
 package io.generators.core;
 
-import org.joda.time.DateTime;
-import org.joda.time.ReadableInstant;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newTreeSet;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.joda.time.DateTime.now;
 
 import java.util.NavigableSet;
 import java.util.Set;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static com.google.common.collect.Sets.newTreeSet;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.joda.time.DateTime.now;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.ReadableInstant;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class RandomJodaDateTimeGeneratorTest {
 
@@ -148,6 +153,59 @@ public class RandomJodaDateTimeGeneratorTest {
     }
 
     @Test
+    public void shouldGenerateDateInTheSameTimeZoneAsFromDate() {
+        //Given
+        DateTimeZone specificTimeZone = DateTimeZone.forOffsetHours(5);
+        DateTime from = now(specificTimeZone);
+
+        DateTimeZone otherTimeZone = DateTimeZone.forOffsetHours(4);
+        DateTime to = now().plusDays(1).withZone(otherTimeZone);
+
+        Generator<DateTime> randomJodaDateTimeGenerator = new RandomJodaDateTimeGenerator(from, to);
+
+        //When
+        DateTime generated = randomJodaDateTimeGenerator.next();
+
+        //Then
+        assertThat(generated.getZone(), is(specificTimeZone));
+    }
+
+    @Test
+    public void shouldGenerateDateInTheSameTimeZoneAsFromDates() {
+        //Given
+        Generator<DateTime> from = new Generator<DateTime>() {
+            public int timeZoneHours = 0;
+
+            @Override
+            public DateTime next() {
+                return now().withZone(DateTimeZone.forOffsetHours(timeZoneHours++));
+            }
+        };
+
+        Generator<DateTime> to = Generators.ofInstance(now().plusDays(10));
+
+        Generator<DateTime> randomJodaDateTimeGenerator = new RandomJodaDateTimeGenerator(from, to);
+
+        //When & Then
+        assertThat(randomJodaDateTimeGenerator.next().getZone(),is(DateTimeZone.forOffsetHours(0)));
+        assertThat(randomJodaDateTimeGenerator.next().getZone(),is(DateTimeZone.forOffsetHours(1)));
+        assertThat(randomJodaDateTimeGenerator.next().getZone(),is(DateTimeZone.forOffsetHours(2)));
+    }
+
+    @Test
+    public void shouldUseProvidedTimeZoneWhenGeneratingTheDate() {
+        //Given
+        DateTimeZone specificTimeZone = DateTimeZone.forOffsetHours(5);
+        Generator<DateTime> randomJodaDateTimeGenerator = new RandomJodaDateTimeGenerator().withTimeZone(specificTimeZone);
+
+        //When
+        DateTime generated = randomJodaDateTimeGenerator.next();
+
+        //Then
+        assertThat(generated.getZone(), is(specificTimeZone));
+    }
+
+    @Test
     public void shouldFailIfTheDateFromIsNull() {
         //Given
         expectedException.expect(NullPointerException.class);
@@ -156,6 +214,8 @@ public class RandomJodaDateTimeGeneratorTest {
         //When & Then
         new RandomJodaDateTimeGenerator(null, now());
     }
+
+
 
     @Test
     public void shouldFailIfTheDateToIsNull() {
