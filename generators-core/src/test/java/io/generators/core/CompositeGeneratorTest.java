@@ -1,18 +1,20 @@
 package io.generators.core;
 
+import static com.google.common.collect.Iterables.getFirst;
+import static com.google.common.collect.Iterables.getLast;
+import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import java.util.List;
+import javax.annotation.Nullable;
+
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class CompositeGeneratorTest {
 
@@ -41,21 +43,24 @@ public class CompositeGeneratorTest {
 
     @Test
     public void shouldCreateRichObject() {
-        Generator<String> stringGenerator = Generators.ofInstance("someString");
-        Generator<String> otherStringGenerator = Generators.ofInstance("xyz");
-        Function<List<String>, String> aggregationFunction = new Function<List<String>, String>() {
-            @Nullable
+        String someString = "someString";
+        Generator<Object> stringGenerator = Generators.<Object>ofInstance(someString);
+
+        byte age = 25;
+        Generator<Object> byteGenerator = Generators.<Object>ofInstance(age);
+
+        Function<List<Object>, Person> aggregationFunction = new Function<List<Object>, Person>() {
             @Override
-            public String apply(@Nullable List<String> input) {
-                return Joiner.on(",").join(input);
+            public Person apply(List<Object> input) {
+                return new Person(getFirst(input, null).toString(), (byte) getLast(input, null));
             }
         };
 
-        Generator<String> compositeGenerator = new CompositeGenerator<>(aggregationFunction, asList(stringGenerator, otherStringGenerator));
+        Generator<Person> compositeGenerator = new CompositeGenerator<>(aggregationFunction, asList(stringGenerator, byteGenerator));
 
-        String generatedString = compositeGenerator.next();
+        Person generatedString = compositeGenerator.next();
 
-        assertThat(generatedString, is("someString,xyz"));
+        assertThat(generatedString, is(new Person(someString, age)));
     }
 
     @Test
@@ -72,6 +77,44 @@ public class CompositeGeneratorTest {
         expectedException.expectMessage("No generators provided");
 
         new CompositeGenerator<>(Functions.<List<Object>>identity(), null);
+    }
+
+    private static class Person {
+        private final String name;
+        private final byte age;
+
+        Person(String name, byte age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            Person person = (Person) o;
+
+            if (age != person.age) {
+                return false;
+            }
+            if (name != null ? !name.equals(person.name) : person.name != null) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = name != null ? name.hashCode() : 0;
+            result = 31 * result + (int) age;
+            return result;
+        }
     }
 
 
