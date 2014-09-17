@@ -51,7 +51,7 @@ public class PaddingFunction implements Function<Object, String> {
      *
      * @param toPad object which string representation will be padded if less than minimum length
      * @return padded string
-     * @throws java.lang.NullPointerException when {@code toPad} is {@code null} or {@see Objects#toString()}
+     * @throws java.lang.NullPointerException when {@code toPad} is {@code null} or {@link com.google.common.base.Objects#toString()}
      */
     @Override
     public String apply(Object toPad) {
