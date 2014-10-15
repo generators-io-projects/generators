@@ -3,6 +3,10 @@
 *.class
 target/
 
+# Gradle Files #
+build/
+.gradle/
+
 # Package Files #
 *.jar
 *.war
