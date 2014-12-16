@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RandomFromCollectionGenerator<T> implements Generator<T> {
     private final List<T> items;
     private final Random random = new Random();
+    private int exclusiveIndex;
 
     /**
      * Creates generator that selects values from <code>items</code> passed in
@@ -27,6 +28,7 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
      */
     public RandomFromCollectionGenerator(@Nonnull Collection<T> items) {
         this.items = ImmutableList.copyOf(checkNotNull(items, "Collection for generation can't be null"));
+        exclusiveIndex = this.items.size();
     }
 
     /**
@@ -38,17 +40,11 @@ public class RandomFromCollectionGenerator<T> implements Generator<T> {
     @SafeVarargs
     public RandomFromCollectionGenerator(T... items) {
         this.items = ImmutableList.copyOf(checkNotNull(items, "Collection for generation can't be null"));
+        exclusiveIndex = this.items.size();
     }
 
     @Override
     public T next() {
-        int maximumIndex = items.size() - 1;
-        if (maximumIndex > 0) {
-            return items.get(random.nextInt(maximumIndex));
-        } else if (maximumIndex == 0) {
-            return items.get(0);
-        } else {
-            return null;
-        }
+        return exclusiveIndex > 0 ? items.get(random.nextInt(exclusiveIndex)) : null;
     }
 }

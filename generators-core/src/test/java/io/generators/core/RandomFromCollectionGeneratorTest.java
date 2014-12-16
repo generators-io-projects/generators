@@ -8,11 +8,13 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -82,6 +84,21 @@ public class RandomFromCollectionGeneratorTest {
             //Then
             assertThat(nullValue, nullValue());
         }
+    }
+
+    @Test
+    public void shouldSometimesReturnLastItemInCollection() {
+        //Given
+        Generator<Integer> someGenerator = new RandomFromCollectionGenerator<>(1,2);
+
+        for (int i = 0; i < 100; i++) {
+            //When
+            Integer generated = someGenerator.next();
+            //Then
+            if (generated % 2 == 0) return;
+        }
+
+        fail("Number 2 was not generated");
     }
 
     @Test
