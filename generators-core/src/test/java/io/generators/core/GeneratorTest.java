@@ -1,21 +1,28 @@
 package io.generators.core;
 
+import com.google.common.collect.ContiguousSet;
+import com.google.common.collect.DiscreteDomain;
+import com.google.common.collect.Range;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class GeneratorTest {
 
-    private AtomicInteger counter;
     private Generator<Integer> integers;
 
     @Before
     public void setUp() throws Exception {
-        counter = new AtomicInteger(1);
+        AtomicInteger counter = new AtomicInteger(1);
         integers = counter::getAndIncrement;
     }
 
@@ -43,7 +50,7 @@ public class GeneratorTest {
 
     @Test
     public void shouldFlatMap() {
-        Generator<Integer> gen = integers.flatMap(x -> () -> new Integer[]{1,2,3}[x % 3]);
+        Generator<Integer> gen = integers.flatMap(x -> () -> new Integer[]{1, 2, 3}[x % 3]);
 
         assertThat(gen.next(), is(2));
         assertThat(gen.next(), is(3));
@@ -51,6 +58,30 @@ public class GeneratorTest {
         assertThat(gen.next(), is(2));
         assertThat(gen.next(), is(3));
         assertThat(gen.next(), is(1));
+    }
+
+
+    @Test
+    public void shouldConvertGeneratorToStream() {
+        Stream<Integer> integerStream = integers.stream();
+
+        List<Integer> integerList = integerStream.limit(100).collect(toList());
+
+        ContiguousSet<Integer> expectedIntegers = ContiguousSet.create(Range.closed(1, 100), DiscreteDomain.integers());
+
+        assertThat(integerList, contains(expectedIntegers.toArray()));
+    }
+
+    @Test
+    public void shouldConvertStreamToGenerator() {
+        Stream<String> names = Stream.of("Radek", "John", "Karel", "David");
+
+        Generator<String> gen = Generator.from(names);
+
+        assertThat(gen.next(), is("Radek"));
+        assertThat(gen.next(), is("John"));
+        assertThat(gen.next(), is("Karel"));
+        assertThat(gen.next(), is("David"));
     }
 
 }

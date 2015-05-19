@@ -2,6 +2,7 @@ package io.generators.core;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Generates instance of &lt;T&gt;
@@ -53,6 +54,20 @@ public interface Generator<T> {
      */
     default <U> Generator<U> flatMap(Function<T, Generator<U>> f) {
         return () -> f.apply(next()).next();
+    }
+
+    default Stream<T> stream() {
+        return Stream.generate(this::next);
+    }
+
+    /**
+     * Converts Stream of T to Generator of T. Returned generator throws {@link java.util.NoSuchElementException} if there are no elements left in the stream and {@link Generator#next} is called
+     * @param stream of elements to be used for generation
+     * @param <T> type of the Stream and Generator values
+     * @return Generator returning elements from the stream
+     */
+    static <T> Generator<T> from(Stream<T> stream) {
+        return stream.iterator()::next;
     }
 }
 
