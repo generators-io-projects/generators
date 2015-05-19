@@ -71,31 +71,6 @@ public class FluentGenerator<T> implements Generator<T> {
     }
 
     /**
-     * Returns generator that transforms generated values from <T> to <G> using provided {@code function}
-     *
-     * @param function used for the transformation
-     * @param <G>      result of the transformation
-     * @return FluentGenerator doing transformation
-     * @see io.generators.core.TransformingGenerator
-     */
-    @CheckReturnValue
-    public <G> FluentGenerator<G> transform(@Nonnull Function<T, G> function) {
-        return from(new TransformingGenerator<>(delegate, checkNotNull(function)));
-    }
-
-    /**
-     * Returns FluentGenerator that filters values using provided {@code predicate}
-     *
-     * @param predicate to use for filtering
-     * @return Filtering FluentGenerator
-     * @see io.generators.core.FilteringGenerator
-     */
-    @CheckReturnValue
-    public FluentGenerator<T> filter(@Nonnull Predicate<T> predicate) {
-        return from(new FilteringGenerator<>(delegate, checkNotNull(predicate)));
-    }
-
-    /**
      * Returns FluentGenerator that published generated values to provided {@code first} and {@code other} consumers
      *
      * @param first  consumer

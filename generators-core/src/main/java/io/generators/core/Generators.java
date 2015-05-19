@@ -78,7 +78,7 @@ public final class Generators {
      * @return generator that returns card/account numbers with calculated Luhn check Digit
      */
     public static Generator<Long> cardNumber(Generator<Long> partialAccountNumberGenerator) {
-        return new TransformingGenerator<>(partialAccountNumberGenerator, appendLuhnCheckDigit());
+        return partialAccountNumberGenerator.map(appendLuhnCheckDigit());
     }
 
     public static Generator<Integer> nDigitPositiveInteger(int digits) {
@@ -88,8 +88,8 @@ public final class Generators {
         return new RandomPositiveIntegerGenerator(from, to);
     }
 
-    public static <F, T> Generator<T> transform(Generator<F> delegate, Function<F, T> transformation) {
-        return new TransformingGenerator<>(delegate, transformation);
+    public static <F, T> Generator<T> transform(Generator<F> delegate, java.util.function.Function<F, T> transformation) {
+        return delegate.map(transformation);
     }
 
     public static Generator<String> upperCase(GeneratorOfInstance<String> delegate, Locale locale) {

@@ -1,9 +1,9 @@
 package io.generators.core;
 
-import com.google.common.base.Function;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -61,7 +61,7 @@ public final class MoreFunctions {
      *
      * @return Function that appends Luhn Check Digit to the provided input number
      */
-    public static Function<Long, Long> appendLuhnCheckDigit() {
+    public static java.util.function.Function<Long, Long> appendLuhnCheckDigit() {
         return new LuhnCheckDigitFunction();
     }
 }

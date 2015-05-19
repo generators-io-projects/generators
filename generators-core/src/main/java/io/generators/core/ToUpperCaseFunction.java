@@ -1,10 +1,9 @@
 package io.generators.core;
 
-import com.google.common.base.Function;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Locale;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

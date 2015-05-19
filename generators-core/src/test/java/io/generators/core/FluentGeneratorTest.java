@@ -120,36 +120,4 @@ public class FluentGeneratorTest {
         }
         assertThat(amountsSet, hasSize(5));
     }
-
-    @Test
-    public void shouldApplyTransformingGenerator() {
-        //Given
-        FluentGenerator<Long> generator = FluentGenerator.from(ofInstance(-5))
-                .transform(new Function<Integer, Long>() {
-                    @Override
-                    public Long apply(Integer input) {
-                        return (long) input * input;
-                    }
-                });
-
-        //When & Then
-        assertThat(generator.next(), is(25L));
-    }
-
-    @Test
-    public void shouldApplyFilter() {
-        //Given
-        FluentGenerator<String> generator = FluentGenerator.from(new RandomFromCollectionGenerator<>("a", "b", "B", "c"))
-                .filter(new Predicate<String>() {
-                    @Override
-                    public boolean apply(String input) {
-                        return !"b".equalsIgnoreCase(input);
-                    }
-                });
-
-        //When & Then
-        for (int i = 0; i < 10; i++) {
-            assertThat(generator.next(), isOneOf("a", "c"));
-        }
-    }
 }
