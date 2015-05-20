@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -19,10 +19,11 @@ import static org.junit.Assert.assertThat;
 public class GeneratorTest {
 
     private Generator<Integer> integers;
+    private AtomicInteger counter;
 
     @Before
     public void setUp() throws Exception {
-        AtomicInteger counter = new AtomicInteger(1);
+        counter = new AtomicInteger(1);
         integers = counter::getAndIncrement;
     }
 
@@ -82,6 +83,28 @@ public class GeneratorTest {
         assertThat(gen.next(), is("John"));
         assertThat(gen.next(), is("Karel"));
         assertThat(gen.next(), is("David"));
+    }
+
+    @Test
+    public void shouldConvertGeneratorToSupplier() {
+        Supplier<Integer> integerSupplier = integers.supplier();
+
+        assertThat(integerSupplier.get(), is(1));
+        assertThat(integerSupplier.get(), is(2));
+        assertThat(integerSupplier.get(), is(3));
+        assertThat(integerSupplier.get(), is(4));
+    }
+
+    @Test
+    public void shouldConvertSupplierToGenerator() {
+        Supplier<Integer> supplier = counter::getAndDecrement;
+
+        Generator<Integer> generator = Generator.from(supplier);
+
+        assertThat(generator.next(), is(1));
+        assertThat(generator.next(), is(0));
+        assertThat(generator.next(), is(-1));
+        assertThat(generator.next(), is(-2));
     }
 
 }
