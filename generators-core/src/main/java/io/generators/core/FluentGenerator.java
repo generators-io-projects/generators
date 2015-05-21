@@ -70,37 +70,6 @@ public class FluentGenerator<T> implements Generator<T> {
         return new GeneratorIterable<>(size, delegate);
     }
 
-    /**
-     * Returns FluentGenerator that published generated values to provided {@code first} and {@code other} consumers
-     *
-     * @param first  consumer
-     * @param others consumers
-     * @return Broadcasting FluentGenerator
-     * @see io.generators.core.BroadcastingGenerator
-     */
-    @SafeVarargs
-    @CheckReturnValue
-    public final FluentGenerator<T> publishTo(@Nonnull  Consumer<T> first, @Nonnull Consumer<T>... others) {
-        final ImmutableList<Consumer<T>> consumers = ImmutableList.<Consumer<T>>builder()
-                .add(first)
-                .add(others)
-                .build();
-        return publishTo(consumers);
-
-    }
-
-    /**
-     * Returns FluentGenerator that published generated values to provided {@code consumers}
-     *
-     * @param consumers to publish/broadcast to
-     * @return Broadcasting FluentGenerator
-     * @see io.generators.core.BroadcastingGenerator
-     */
-    @CheckReturnValue
-    public FluentGenerator<T> publishTo(@Nonnull List<Consumer<T>> consumers) {
-        return from(new BroadcastingGenerator<>(delegate, checkNotNull(consumers)));
-    }
-
     @Override
     public T next() {
         return delegate.next();

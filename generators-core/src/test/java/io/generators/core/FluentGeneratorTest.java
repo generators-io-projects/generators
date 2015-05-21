@@ -39,46 +39,6 @@ public class FluentGeneratorTest {
     }
 
     @Test
-    public void shouldPublishGeneratedValuesToConsumers() {
-        //Given
-        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(firstConsumer, secondConsumer);
-
-        //When
-        Integer integer = generator.next();
-
-        //Then
-        verify(firstConsumer).consume(integer);
-        verify(secondConsumer).consume(integer);
-
-        //When
-        Integer integer2 = generator.next();
-
-        //Then
-        verify(firstConsumer).consume(integer2);
-        verify(secondConsumer).consume(integer2);
-    }
-
-    @Test
-    public void shouldPublishGeneratedValuesToConsumersList() {
-        //Given
-        Generator<Integer> generator = FluentGenerator.from(positiveInts).publishTo(asList(firstConsumer, secondConsumer)).unique();
-
-        //When
-        Integer integer = generator.next();
-
-        //Then
-        verify(firstConsumer).consume(integer);
-        verify(secondConsumer).consume(integer);
-
-        //When
-        Integer integer2 = generator.next();
-
-        //Then
-        verify(firstConsumer).consume(integer2);
-        verify(secondConsumer).consume(integer2);
-    }
-
-    @Test
     public void shouldCreateFluentUniqueGenerator() {
         //Given
         Generator<Integer> generator = FluentGenerator.from(positiveInts(1, 3)).unique();

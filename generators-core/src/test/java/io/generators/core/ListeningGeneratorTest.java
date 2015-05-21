@@ -12,18 +12,18 @@ public class ListeningGeneratorTest {
     public void shouldGenerateConsumedValues() {
         //Given
         ListeningGenerator<Integer> listeningGenerator = new ListeningGenerator<>();
-        BroadcastingGenerator<Integer> broadcastingGenerator = new BroadcastingGenerator<>(new SequentialIntegerGenerator(), listeningGenerator);
+        Generator<Integer> original = new SequentialIntegerGenerator().peek(listeningGenerator);
 
         //When & Then
         assertThat(listeningGenerator.next(), nullValue());
 
-        Integer firstInteger = broadcastingGenerator.next();
+        Integer firstInteger = original.next();
         assertThat(listeningGenerator.next(), is(firstInteger));
 
-        Integer secondInteger = broadcastingGenerator.next();
+        Integer secondInteger = original.next();
         assertThat(listeningGenerator.next(), is(secondInteger));
 
-        Integer thirdInteger = broadcastingGenerator.next();
+        Integer thirdInteger = original.next();
         assertThat(listeningGenerator.next(), is(thirdInteger));
     }
 }

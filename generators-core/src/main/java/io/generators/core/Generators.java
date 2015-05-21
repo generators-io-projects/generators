@@ -34,11 +34,6 @@ public final class Generators {
         return new RandomPositiveLongGenerator(from, to);
     }
 
-    public static <T> Generator<T> broadcasting(Generator<T> delegate, List<Consumer<T>> consumers) {
-        return new BroadcastingGenerator<>(delegate, consumers);
-    }
-
-
     public static Generator<String> alphabetic(int length) {
         return new RandomAlphabeticStringGenerator(length);
     }
