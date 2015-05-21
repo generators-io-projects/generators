@@ -4,8 +4,11 @@ import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Range;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -17,6 +20,9 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class GeneratorTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private Generator<Integer> integers;
     private AtomicInteger counter;
@@ -105,6 +111,30 @@ public class GeneratorTest {
         assertThat(generator.next(), is(0));
         assertThat(generator.next(), is(-1));
         assertThat(generator.next(), is(-2));
+    }
+
+    @Test
+    public void shouldPeekIntoTheGeneratedValues() {
+        List<Integer> seenValues = new ArrayList<>();
+        List<Integer> generatedValues = new ArrayList<>();
+        Generator<Integer> peekingGenerator = integers.peek(seenValues::add);
+
+        generatedValues.add(peekingGenerator.next());
+        generatedValues.add(peekingGenerator.next());
+        generatedValues.add(peekingGenerator.next());
+        generatedValues.add(peekingGenerator.next());
+        generatedValues.add(peekingGenerator.next());
+        generatedValues.add(peekingGenerator.next());
+
+        assertThat(seenValues, is(generatedValues));
+    }
+
+
+    @Test
+    public void shouldFailDuringCreationIfTheConsumerForPeekIsNull() {
+        expectedException.expect(NullPointerException.class);
+        expectedException.expectMessage("action can't be null");
+        integers.peek(null);
     }
 
 }
