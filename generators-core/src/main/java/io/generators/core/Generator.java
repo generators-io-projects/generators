@@ -133,7 +133,17 @@ public interface Generator<T> {
      * @return the Iterable
      */
     default Iterable<T> toIterable() {
-        return take(Integer.MIN_VALUE);
+        return () -> new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+
+            @Override
+            public T next() {
+                return Generator.this.next();
+            }
+        };
     }
 
     /**
@@ -142,15 +152,14 @@ public interface Generator<T> {
      * @param limit maximum size of the iterable (not necessary the size as in certain cases the generator can run out of the elements before reaching the limit)
      * @return the new iterable
      */
-    default Iterable<T> take(int limit) {
-        checkArgument(limit >= 0 || limit == Integer.MIN_VALUE, "limit must be >= 0 but it was %s", limit);
+    default Iterable<T> take(long limit) {
+        checkArgument(limit >= 0 , "limit must be >= 0 but it was %s", limit);
         return () -> new Iterator<T>() {
-            private static final int INFINITE_SIZE = Integer.MIN_VALUE;
-            private int cursor = 0;
+            private long cursor = 0;
 
             @Override
             public boolean hasNext() {
-                return limit == INFINITE_SIZE || cursor < limit;
+                return cursor < limit;
             }
 
             @Override
@@ -163,6 +172,37 @@ public interface Generator<T> {
             }
         };
     }
+
+
+    /**
+     * Indicates whether generator has finished generating values
+     * @return true if there are no more values to generate
+     */
+    default boolean finished() {
+        return false;
+    }
+
+    /**
+     * Limits number of values that that this generator can generate (it can be less if some other method is used)
+     * @param limit maximum number of generated values
+     * @return finite generator
+     */
+    default FiniteGenerator<T> limit(long limit) {
+        checkArgument(limit >= 0 , "limit must be >= 0 but it was %s", limit);
+        Generator<T> self = this;
+        return new FiniteGenerator<T>() {
+            private long counter = 0;
+            @Override
+            public T next() {
+                counter++;
+                return self.next();
+            }
+
+            @Override
+            public boolean finished() {
+                return counter >= limit;
+            }
+        };
+
+    }
 }
-
-

@@ -15,8 +15,9 @@ public class MorePredicatesTest {
 
     private static final Predicate<Integer> IN_PREDICATE = MorePredicates.in(6, 7, 8);
 
+
     @DataPoints
-    public static final PredicateDataPoint<Integer>[] DATA_POINTS = new PredicateDataPoint[]{
+    public static final PredicateDataPoint[] DATA_POINTS = new PredicateDataPoint[]{
             create(IN_PREDICATE, 5, false),
             create(IN_PREDICATE, 6, true),
             create(IN_PREDICATE, 7, true),

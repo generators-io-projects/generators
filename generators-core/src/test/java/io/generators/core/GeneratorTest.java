@@ -2,20 +2,19 @@ package io.generators.core;
 
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -176,5 +175,30 @@ public class GeneratorTest {
         expectedException.expectMessage("limit must be >= 0 but it was -1");
 
         integers.take(-1);
+    }
+
+
+    @Test
+    public void shouldExecuteActionForNElement() {
+        List<Integer> generated = new ArrayList<>();
+        integers.limit(5).foreach(generated::add);
+
+        assertThat(generated, is(ImmutableList.of(1, 2, 3, 4, 5)));
+    }
+
+    @Test
+    public void shouldExecuteActionForZeroElement() {
+        List<Integer> generated = new ArrayList<>();
+        integers.limit(0).foreach(generated::add);
+
+        assertThat(generated, is(emptyList()));
+    }
+
+    @Test
+    public void shouldAcceptOnlyPositiveValuesForLimit() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("limit must be >= 0 but it was -1");
+
+        integers.limit(-1);
     }
 }
