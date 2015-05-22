@@ -1,10 +1,14 @@
 package io.generators.core;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Generates instance of &lt;T&gt;
@@ -109,8 +113,8 @@ public interface Generator<T> {
      * from the resulting generator.
      *
      * @param action a <a href="package-summary.html#NonInterference">
-     *                 non-interfering</a> action to perform on the elements as
-     *                 they are consumed from the generator
+     *               non-interfering</a> action to perform on the elements as
+     *               they are consumed from the generator
      * @return the new generator
      * @throws NullPointerException when action is null
      */
@@ -120,6 +124,43 @@ public interface Generator<T> {
             T next = next();
             action.consume(next);
             return next;
+        };
+    }
+
+    /**
+     * Returns possibly infinite Iterable
+     *
+     * @return the Iterable
+     */
+    default Iterable<T> toIterable() {
+        return take(Integer.MIN_VALUE);
+    }
+
+    /**
+     * Returns iterable that can be iterated up to the specified limit
+     *
+     * @param limit maximum size of the iterable (not necessary the size as in certain cases the generator can run out of the elements before reaching the limit)
+     * @return the new iterable
+     */
+    default Iterable<T> take(int limit) {
+        checkArgument(limit >= 0 || limit == Integer.MIN_VALUE, "limit must be >= 0 but it was %s", limit);
+        return () -> new Iterator<T>() {
+            private static final int INFINITE_SIZE = Integer.MIN_VALUE;
+            private int cursor = 0;
+
+            @Override
+            public boolean hasNext() {
+                return limit == INFINITE_SIZE || cursor < limit;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                cursor++;
+                return Generator.this.next();
+            }
         };
     }
 }

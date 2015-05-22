@@ -9,7 +9,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -137,6 +139,42 @@ public class GeneratorTest {
         integers.peek(null);
     }
 
+    @Test
+    public void shouldCreateInfiniteIterableOutOfTheGenerator() {
+        Iterable<Integer> integersIterable = integers.toIterable();
 
+        Iterator<Integer> iterator = integersIterable.iterator();
+        for (int i = 1; i < 20; i++) {
+            assertThat(iterator.next(),is(i));
+        }
+    }
 
+    @Test
+    public void shouldCreateLimitedIterableOutOfTheGenerator() {
+        Iterable<Integer> integersIterable = integers.take(5);
+
+        Iterator<Integer> iterator = integersIterable.iterator();
+        for (int i = 1; i <= 5; i++) {
+            assertThat(iterator.hasNext(), is(true));
+            assertThat(iterator.next(), is(i));
+        }
+    }
+
+    @Test
+    public void shouldThrowNoSuchElementExceptionWhenRequestingMoreElementsThanSpecified() {
+        expectedException.expect(NoSuchElementException.class);
+        Iterable<Integer> integersIterable = integers.take(1);
+
+        Iterator<Integer> iterator = integersIterable.iterator();
+        iterator.next();
+        iterator.next();
+    }
+
+    @Test
+    public void shouldAcceptOnlyPositiveValuesForCreatingIterable() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("limit must be >= 0 but it was -1");
+
+        integers.take(-1);
+    }
 }

@@ -1,6 +1,5 @@
 package io.generators.core;
 
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
 import java.util.List;
@@ -46,20 +45,16 @@ public final class Generators {
         return new TypeGenerator<>(type, valueGenerator);
     }
 
-    public static <T> Iterable<T> iterable(int limit, Generator<T> generator) {
-        return new GeneratorIterable<>(limit, generator);
-    }
-
     public static <T> Generator<T> biased(int percentageBiasTowardsFirst, Generator<T> firstGenerator, Generator<T> secondGenerator) {
         return new BiasedGenerator<>(percentageBiasTowardsFirst, firstGenerator, secondGenerator);
     }
 
     public static <T> List<T> listFrom(int limit, Generator<T> generator) {
-        return FluentIterable.from(new GeneratorIterable<>(generator)).limit(limit).toList();
+        return FluentIterable.from(generator.take(limit)).toList();
     }
 
     public static <T> Set<T> setFrom(int limit, Generator<T> generator) {
-        return FluentIterable.from(new GeneratorIterable<>(generator)).limit(limit).toSet();
+        return FluentIterable.from(generator.take(1)).limit(limit).toSet();
     }
 
     public static <T extends Enum<T>> Generator<T> randomEnum(Class<T> enumClass) {

@@ -1,7 +1,5 @@
 package io.generators.core;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static io.generators.core.Generators.ofInstance;
 import static io.generators.core.Generators.positiveInts;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -70,7 +67,7 @@ public class FluentGeneratorTest {
         Iterable<WholeAmount> amounts = FluentGenerator.from(positiveInts)
                 .unique()
                 .ofType(WholeAmount.class)
-                .toIterable(5);
+                .take(5);
 
         Set<WholeAmount> amountsSet = newHashSet();
 

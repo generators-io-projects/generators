@@ -63,15 +63,6 @@ public class GeneratorsTest {
     }
 
     @Test
-    public void shouldReturnIterableOverGenerator() {
-        String value = "Hi";
-        Iterable<String> iterable = Generators.iterable(3, new GeneratorOfInstance<>(value));
-        for (String generated : iterable) {
-            assertThat(generated, is(value));
-        }
-    }
-
-    @Test
     public void shouldReturnRandomEnumGenerator() {
         Generator<TestEnum> testEnumGenerator = Generators.randomEnum(TestEnum.class);
         assertThat(testEnumGenerator.next(), isA(TestEnum.class));
