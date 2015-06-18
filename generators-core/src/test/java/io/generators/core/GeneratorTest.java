@@ -201,4 +201,17 @@ public class GeneratorTest {
 
         integers.limit(-1);
     }
+
+    @Test
+    public void shouldProduceValuesWhilePredicateIsTrue() {
+        List<Integer> smallInts =  integers.takeWhile(v -> v < 5).toList();
+        assertThat(smallInts, is(ImmutableList.of(1, 2, 3, 4)));
+
+    }
+
+    @Test
+    public void shouldNotProduceAnyValuesWhenPredicateIsFalse() {
+        List<Integer> smallInts =  integers.takeWhile(x -> false).toList();
+        assertThat(smallInts, is(emptyList()));
+    }
 }

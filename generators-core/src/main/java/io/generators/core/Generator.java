@@ -1,6 +1,7 @@
 package io.generators.core;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
@@ -136,7 +137,7 @@ public interface Generator<T> {
         return () -> new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return true;
+                return !finished();
             }
 
             @Override
@@ -153,7 +154,7 @@ public interface Generator<T> {
      * @return the new iterable
      */
     default Iterable<T> take(long limit) {
-        checkArgument(limit >= 0 , "limit must be >= 0 but it was %s", limit);
+        checkArgument(limit >= 0, "limit must be >= 0 but it was %s", limit);
         return () -> new Iterator<T>() {
             private long cursor = 0;
 
@@ -173,9 +174,40 @@ public interface Generator<T> {
         };
     }
 
+    /**
+     * Returns generator that
+     * @param predicate
+     * @return
+     */
+    default FiniteGenerator<T> takeWhile(Predicate<T> predicate) {
+        Generator<T> self = this;
+        return new FiniteGenerator<T>() {
+            boolean advanced = false;
+            T next;
+            @Override
+            public T next() {
+                if (!advanced) {
+                    throw new NoSuchElementException("Should ask whether it is not finished first");
+                }
+                advanced = false;
+                return next;
+            }
+
+            @Override
+            public boolean finished() {
+                if (!advanced) {
+                    next = self.next();
+                    advanced = true;
+                }
+                return !predicate.test(next);
+            }
+        };
+    }
+
 
     /**
      * Indicates whether generator has finished generating values
+     *
      * @return true if there are no more values to generate
      */
     default boolean finished() {
@@ -184,14 +216,16 @@ public interface Generator<T> {
 
     /**
      * Limits number of values that that this generator can generate (it can be less if some other method is used)
+     *
      * @param limit maximum number of generated values
      * @return finite generator
      */
     default FiniteGenerator<T> limit(long limit) {
-        checkArgument(limit >= 0 , "limit must be >= 0 but it was %s", limit);
+        checkArgument(limit >= 0, "limit must be >= 0 but it was %s", limit);
         Generator<T> self = this;
         return new FiniteGenerator<T>() {
             private long counter = 0;
+
             @Override
             public T next() {
                 counter++;
@@ -205,4 +239,6 @@ public interface Generator<T> {
         };
 
     }
+
+
 }

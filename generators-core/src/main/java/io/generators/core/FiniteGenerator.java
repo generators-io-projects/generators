@@ -1,5 +1,9 @@
 package io.generators.core;
 
+import com.google.common.collect.ImmutableList;
+
+import java.util.List;
+
 /**
  * Generator that should generate finite number of values (should as it depends on the condition)
  *
@@ -15,8 +19,14 @@ public interface FiniteGenerator<T> extends Generator<T> {
      * @param action to be executed
      */
     default void foreach(Consumer<T> action) {
-        while (!finished()) {
-            action.consume(next());
-        }
+        toIterable().forEach(action::consume);
+    }
+
+    /**
+     * Creates list out of the generated elements.
+     * @return list of generated values
+     */
+    default List<T> toList() {
+        return ImmutableList.copyOf(toIterable());
     }
 }
