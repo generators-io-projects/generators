@@ -1,9 +1,9 @@
 package io.generators.core;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -203,6 +203,26 @@ public interface Generator<T> {
             }
         };
     }
+
+    /**
+     * Returns a generator that discards the first {@code n} generated elements.
+     *
+     * @param n the number of leading elements to skip
+     * @return the new stream
+     * @throws IllegalArgumentException if {@code n} is negative
+     */
+    default Generator<T> skip(int n) {
+        checkArgument(n >= 0, "number of values to skip  must be >= 0 but it was %s", n);
+        AtomicInteger counter = new AtomicInteger(n);
+        return () -> {
+            T next;
+            do {
+                next = this.next();
+            } while (counter.decrementAndGet() >= 0);
+            return next;
+        };
+    }
+
 
 
     /**

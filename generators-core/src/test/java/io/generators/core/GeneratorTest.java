@@ -214,4 +214,22 @@ public class GeneratorTest {
         List<Integer> smallInts =  integers.takeWhile(x -> false).toList();
         assertThat(smallInts, is(emptyList()));
     }
+
+    @Test
+    public void shouldSkip3Items() {
+        assertThat(integers.skip(3).next(), is(4));
+    }
+
+    @Test
+    public void shouldNotSkipAnyItems() {
+        assertThat(integers.skip(0).next(), is(1));
+    }
+
+    @Test
+    public void shouldAcceptOnlyPositiveValuesForSkip() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("number of values to skip  must be >= 0 but it was -1");
+
+        integers.skip(-1);
+    }
 }
