@@ -45,12 +45,6 @@ public class GeneratorsTest {
     }
 
     @Test
-    public void shouldReturnSetPopulatedWithGenerator() {
-        Set<Integer> integers = Generators.setFrom(5, new GeneratorOfInstance<>(5));
-        assertThat(integers, hasSize(1));
-    }
-
-    @Test
     public void shouldReturnListPopulatedWithGenerator() {
         List<Integer> integers = Generators.listFrom(5, new GeneratorOfInstance<>(5));
         assertThat(integers, contains(5, 5, 5, 5, 5));

@@ -1,9 +1,6 @@
 package io.generators.core;
 
-import com.google.common.collect.ContiguousSet;
-import com.google.common.collect.DiscreteDomain;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
+import com.google.common.collect.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +12,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -231,5 +229,17 @@ public class GeneratorTest {
         expectedException.expectMessage("number of values to skip  must be >= 0 but it was -1");
 
         integers.skip(-1);
+    }
+
+    @Test
+    public void shouldCreateEmptySet() {
+        Set<Integer> smallInts =  integers.takeWhile(x -> false).toSet();
+        assertThat(smallInts, is(emptySet()));
+    }
+
+    @Test
+    public void shouldCreateSet() {
+        Set<Integer> smallInts =  integers.takeWhile(x -> x < 5).toSet();
+        assertThat(smallInts, is(ImmutableSet.of(1,2,3,4)));
     }
 }

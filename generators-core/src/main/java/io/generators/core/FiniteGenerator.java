@@ -1,8 +1,11 @@
 package io.generators.core;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Generator that should generate finite number of values (should as it depends on the condition)
@@ -24,9 +27,19 @@ public interface FiniteGenerator<T> extends Generator<T> {
 
     /**
      * Creates list out of the generated elements.
+     *
      * @return list of generated values
      */
     default List<T> toList() {
         return ImmutableList.copyOf(toIterable());
+    }
+
+    /**
+     * Create set out of the generated elements
+     *
+     * @return set of generated values
+     */
+    default Set<T> toSet() {
+        return ImmutableSet.copyOf(toIterable());
     }
 }

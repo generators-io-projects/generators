@@ -4,12 +4,9 @@ import com.google.common.collect.FluentIterable;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static io.generators.core.MoreFunctions.appendLuhnCheckDigit;
-import static io.generators.core.MoreFunctions.toLowerCase;
-import static io.generators.core.MoreFunctions.toUpperCase;
+import static io.generators.core.MoreFunctions.*;
 import static java.lang.Math.pow;
 
 /**
@@ -51,10 +48,6 @@ public final class Generators {
 
     public static <T> List<T> listFrom(int limit, Generator<T> generator) {
         return FluentIterable.from(generator.take(limit)).toList();
-    }
-
-    public static <T> Set<T> setFrom(int limit, Generator<T> generator) {
-        return FluentIterable.from(generator.take(1)).limit(limit).toSet();
     }
 
     public static <T extends Enum<T>> Generator<T> randomEnum(Class<T> enumClass) {
