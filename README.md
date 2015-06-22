@@ -1,6 +1,8 @@
 io.generators
 ==========
 
+![Build status](https://travis-ci.org/generators-io-projects/generators.svg?branch=generators-2)
+
 io.generators is a tiny framework for generating random or sequential primitives and types in Java.
 
 It supports generating unique values, constants, performing filtering or transformation of the generated values, broadcasting the values to consumers and more.
