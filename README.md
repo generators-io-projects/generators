@@ -20,7 +20,9 @@ First release was released to the central maven repository on the 29/01/2014.
 
     io.generators:generators-core:1.0
 
-Release 1.1 will contain some more generators (composite, padding, truncating) and maybe also basic implementation of the maven-generators-module for generating builders.
+- Release 1.1 will contain some more generators (composite, padding, truncating) and maybe also basic implementation of the maven-generators-module for generating builders.
+
+- There will be also release 2.0 which will use Java 8 features and will introduce backwards incompatible changes (yep, for the sake of clean API). Estimated release date is end of July 2015.
 
 Snapshots are published/updated quite frequently: 
 
