@@ -1,11 +1,18 @@
-apply plugin: 'java'
+plugins {
+    id "java"
+    id 'maven'
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.4"
 
+}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
+
+
 
 dependencies {
     compile 'com.google.guava:guava:16.0.1',
@@ -17,4 +24,40 @@ dependencies {
     testCompile 'junit:junit:4.11',
             'org.hamcrest:hamcrest-all:1.3',
             'org.mockito:mockito-all:1.9.5'
+}
+
+publishing {
+    publications {
+        IoGenPub(MavenPublication) {
+            from components.java
+            groupId 'io.generators'
+            artifactId 'generators-core'
+            version '2.0-RC1'
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['IoGenPub']
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true
+    pkg {
+        repo = 'generators'
+        name = 'generators-core'
+        websiteUrl = 'https://generators.io/'
+
+        userOrg = 'bintray_user'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/generators-io-projects/generators.git'
+        labels = ['java', 'testing', 'random']
+        publicDownloadNumbers = true
+        version {
+            name = '2.0-RC1'
+            desc = 'generators.io core module'
+            released  = new Date()
+            vcsTag = '2.0-RC1'
+        }
+    }
 }
