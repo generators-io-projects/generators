@@ -4,6 +4,7 @@ package io.generators.core;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -63,5 +64,14 @@ public final class MoreFunctions {
      */
     public static java.util.function.Function<Long, Long> appendLuhnCheckDigit() {
         return new LuhnCheckDigitFunction();
+    }
+
+    /**
+     * Creates simple unique filter that discards all already generated values. It may lead to infinite cycle inside generator.
+     * @param <T> Type that's filtered
+     * @return the filter/predicate
+     */
+    public static <T> Predicate<T> infiniteUniqueFilter() {
+        return new InfiniteUniqueFilter<T>();
     }
 }

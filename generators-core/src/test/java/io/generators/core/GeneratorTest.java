@@ -1,6 +1,7 @@
 package io.generators.core;
 
 import com.google.common.collect.*;
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,11 +12,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class GeneratorTest {
@@ -242,4 +244,22 @@ public class GeneratorTest {
         Set<Integer> smallInts =  integers.takeWhile(x -> x < 5).toSet();
         assertThat(smallInts, is(ImmutableSet.of(1,2,3,4)));
     }
+
+    @Test
+    public void shouldGenerateOnlyUniqueValues() {
+        //Given
+        Generator<Integer> uniqueGenerator = new RandomPositiveIntegerGenerator(1, 6).filter(MoreFunctions.infiniteUniqueFilter());
+
+        //When
+        List<Integer> generatedIntegers = newArrayList();
+
+        for (int i = 1; i <= 5; i++) {
+            generatedIntegers.add(uniqueGenerator.next());
+        }
+
+        //Then
+        MatcherAssert.assertThat(generatedIntegers, hasSize(5));
+        MatcherAssert.assertThat(newHashSet(generatedIntegers), hasSize(5));
+    }
+
 }
