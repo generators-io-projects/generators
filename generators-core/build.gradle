@@ -48,7 +48,7 @@ bintray {
         name = 'generators-core'
         websiteUrl = 'https://generators.io/'
 
-        userOrg = 'bintray_user'
+        userOrg = 'generators-io-projects'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/generators-io-projects/generators.git'
         labels = ['java', 'testing', 'random']
