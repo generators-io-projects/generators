@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
@@ -28,7 +30,7 @@ public class UniqueGeneratorTest {
     @Test
     public void shouldGenerateOnlyUniqueValues() {
         //Given
-        Generator<Integer> uniqueGenerator = new UniqueGenerator<>(new RandomPositiveIntegerGenerator(1, 6), 100);
+        Generator<Integer> uniqueGenerator = new UniqueGenerator<>(Generators.positiveInts(1, 6), 100);
 
         //When
         List<Integer> generatedIntegers = newArrayList();

@@ -1,9 +1,9 @@
 package io.generators.core.network;
 
+import static io.generators.core.Generators.positiveInts;
 import static java.lang.String.format;
 
 import io.generators.core.Generator;
-import io.generators.core.RandomPositiveIntegerGenerator;
 
 /**
  * Class generates random valid IPv4 addresses. Currently includes all the types of IP addresses including broadcast,
@@ -17,7 +17,7 @@ public class IPv4Generator implements Generator<String> {
     private final Generator<Integer> octetGenerator;
 
     public IPv4Generator() {
-        this(new RandomPositiveIntegerGenerator(0, 256));
+        this(positiveInts(0, 256));
     }
 
     public IPv4Generator(Generator<Integer> delegate) {

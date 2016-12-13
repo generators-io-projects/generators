@@ -4,7 +4,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,7 +19,7 @@ public class RandomPositiveIntegerGeneratorTest {
 
     @Test
     public void shouldReturnPositiveIntegerBetweenZeroAndIntegerMAX() {
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator();
+        Generator<Integer> randomPositiveIntegerGenerator = Generators.positiveInts;
         for (int i = 0; i < 100; i++) {
             assertThat(randomPositiveIntegerGenerator.next(), greaterThanOrEqualTo(0));
         }
@@ -27,7 +29,7 @@ public class RandomPositiveIntegerGeneratorTest {
     public void shouldReturnPositiveIntegerBetweenFromInclusiveAndToExclusive() {
         int from = 13;
         int to = 20;
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator(from, to);
+        Generator<Integer> randomPositiveIntegerGenerator = Generators.positiveInts(from, to);
         Set<Integer> generatedNumbers = newHashSet();
         for (int i = 0; i < 100; i++) {
             Integer integer = randomPositiveIntegerGenerator.next();
@@ -43,7 +45,7 @@ public class RandomPositiveIntegerGeneratorTest {
     public void shouldReturnSameNumberEveryTime() {
         int from = 13;
         int to = from + 1;
-        Generator<Integer> randomPositiveIntegerGenerator = new RandomPositiveIntegerGenerator(from, to);
+        Generator<Integer> randomPositiveIntegerGenerator = Generators.positiveInts(from, to);
         for (int i = 0; i < 100; i++) {
             assertThat(randomPositiveIntegerGenerator.next(), is(from));
         }
@@ -54,7 +56,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be >= 0");
 
-        new RandomPositiveIntegerGenerator(-1, 20);
+        Generators.positiveInts(-1, 20);
     }
 
     @Test
@@ -62,7 +64,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveIntegerGenerator(5, 5);
+        Generators.positiveInts(5, 5);
     }
 
     @Test
@@ -70,7 +72,7 @@ public class RandomPositiveIntegerGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveIntegerGenerator(12, 11);
+        Generators.positiveInts(12, 11);
     }
 
 }

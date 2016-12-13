@@ -1,10 +1,10 @@
 package io.generators.core.network;
 
+import static io.generators.core.Generators.positiveInts;
 import static java.lang.String.format;
 
 import com.google.common.base.Joiner;
 import io.generators.core.Generator;
-import io.generators.core.RandomPositiveIntegerGenerator;
 
 /**
  * Class generates random valid IPv6 addresses. Currently includes all the types of IP addresses including broadcast,
@@ -18,7 +18,7 @@ public class IPv6Generator implements Generator<String> {
     private final Generator<Integer> hexDigitGenerator;
 
     public IPv6Generator() {
-        this(new RandomPositiveIntegerGenerator(0, 16));
+        this(positiveInts(0, 16));
     }
 
     public IPv6Generator(Generator<Integer> delegate) {

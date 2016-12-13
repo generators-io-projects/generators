@@ -46,13 +46,13 @@ public class GeneratorsTest {
 
     @Test
     public void shouldReturnListPopulatedWithGenerator() {
-        List<Integer> integers = Generators.listFrom(5, new GeneratorOfInstance<>(5));
-        assertThat(integers, contains(5, 5, 5, 5, 5));
+        List<Integer> integers = Generators.listFrom(5, () -> 3);
+        assertThat(integers, contains(3, 3, 3, 3, 3));
     }
 
     @Test
     public void shouldReturnGeneratorOfType() {
-        Generator<BigDecimal> bigDecimalGenerator = Generators.ofType(BigDecimal.class, new GeneratorOfInstance<>("10"));
+        Generator<BigDecimal> bigDecimalGenerator = Generators.ofType(BigDecimal.class, () -> "10");
         assertThat(bigDecimalGenerator.next(), comparesEqualTo(BigDecimal.TEN));
     }
 
@@ -64,7 +64,7 @@ public class GeneratorsTest {
 
     @Test
     public void shouldReturnBiasedGenerator() {
-        Generator<Integer> biasedGenerator = Generators.biased(50, new GeneratorOfInstance<>(5), new GeneratorOfInstance<>(6));
+        Generator<Integer> biasedGenerator = Generators.biased(50, () -> 5, () -> 6);
         Set<Integer> ints = newHashSetWithExpectedSize(2);
         for (int i = 0; i < 100; i++) {
             ints.add(biasedGenerator.next());
@@ -105,7 +105,7 @@ public class GeneratorsTest {
     @Test
     public void shouldConvertGeneratedValuesToUpperCase() throws Exception {
         // Given
-        Generator<String> generator = Generators.upperCase(new GeneratorOfInstance<>(LOWERCASE), Locale.ENGLISH);
+        Generator<String> generator = Generators.upperCase(() -> LOWERCASE, Locale.ENGLISH);
 
         // When
         String upper = generator.next();
@@ -117,7 +117,7 @@ public class GeneratorsTest {
     @Test
     public void shouldUseDefaultLocaleIfNotProvided() throws Exception {
         // Given
-        Generator<String> generator = Generators.upperCase(new GeneratorOfInstance<>(LOWERCASE));
+        Generator<String> generator = Generators.upperCase(() -> LOWERCASE);
 
         // When
         String upper = generator.next();
@@ -130,7 +130,7 @@ public class GeneratorsTest {
     @Test
     public void shouldConvertGeneratedValuesToLowerCase() throws Exception {
         // Given
-        Generator<String> generator = Generators.lowerCase(new GeneratorOfInstance<>(UPPERCASE), Locale.ENGLISH);
+        Generator<String> generator = Generators.lowerCase(() -> UPPERCASE, Locale.ENGLISH);
 
         // When
         String lower = generator.next();
@@ -142,7 +142,7 @@ public class GeneratorsTest {
     @Test
     public void shouldConvertToLowerCaseAndUseDefaultLocaleIfNotProvided() throws Exception {
         // Given
-        Generator<String> generator = Generators.lowerCase(new GeneratorOfInstance<>(UPPERCASE));
+        Generator<String> generator = Generators.lowerCase(() -> UPPERCASE);
 
         // When
         String lower = generator.next();

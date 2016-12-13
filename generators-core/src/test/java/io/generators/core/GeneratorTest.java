@@ -8,12 +8,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
+import static io.generators.core.Generators.positiveInts;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
@@ -248,7 +250,7 @@ public class GeneratorTest {
     @Test
     public void shouldGenerateOnlyUniqueValues() {
         //Given
-        Generator<Integer> uniqueGenerator = new RandomPositiveIntegerGenerator(1, 6).filter(MoreFunctions.infiniteUniqueFilter());
+        Generator<Integer> uniqueGenerator = positiveInts(1, 6).filter(MoreFunctions.infiniteUniqueFilter());
 
         //When
         List<Integer> generatedIntegers = newArrayList();

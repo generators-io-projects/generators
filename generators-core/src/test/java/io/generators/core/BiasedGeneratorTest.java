@@ -15,8 +15,8 @@ public class BiasedGeneratorTest {
     @Test
     public void shouldGenerateAbout20PercentOfFirstGenerator() {
         //Given
-        Generator<Boolean> firstGenerator = new GeneratorOfInstance<>(true);
-        Generator<Boolean> secondGenerator = new GeneratorOfInstance<>(false);
+        Generator<Boolean> firstGenerator = () -> true;
+        Generator<Boolean> secondGenerator = () -> false;
         int biasTowardsFirst = 20;
         Generator<Boolean> biasedGenerator = new BiasedGenerator<>(biasTowardsFirst, firstGenerator, secondGenerator);
         int trueCount = 0;
@@ -36,8 +36,8 @@ public class BiasedGeneratorTest {
     @Test
     public void shouldGenerate100PercentOfFirstGenerator() {
         //Given
-        Generator<Boolean> firstGenerator = new GeneratorOfInstance<>(true);
-        Generator<Boolean> secondGenerator = new GeneratorOfInstance<>(false);
+        Generator<Boolean> firstGenerator = () -> true;
+        Generator<Boolean> secondGenerator = () -> false;
         int biasTowardsFirst = 100;
         Generator<Boolean> biasedGenerator = new BiasedGenerator<>(biasTowardsFirst, firstGenerator, secondGenerator);
         int trueCount = 0;
@@ -56,8 +56,8 @@ public class BiasedGeneratorTest {
     @Test
     public void shouldGenerate0PercentOfFirstGenerator() {
         //Given
-        Generator<Boolean> firstGenerator = new GeneratorOfInstance<>(true);
-        Generator<Boolean> secondGenerator = new GeneratorOfInstance<>(false);
+        Generator<Boolean> firstGenerator = () -> true;
+        Generator<Boolean> secondGenerator = () -> false;
         int biasTowardsFirst = 0;
         Generator<Boolean> biasedGenerator = new BiasedGenerator<>(biasTowardsFirst, firstGenerator, secondGenerator);
         int trueCount = 0;
@@ -78,7 +78,7 @@ public class BiasedGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("bias must be between 0 and 100");
 
-        new BiasedGenerator<>(-1, new GeneratorOfInstance<Object>(0), new GeneratorOfInstance<Object>(0));
+        new BiasedGenerator<>(-1, () -> 13, () -> 13);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BiasedGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("bias must be between 0 and 100");
 
-        new BiasedGenerator<>(101, new GeneratorOfInstance<Object>(0), new GeneratorOfInstance<Object>(0));
+        new BiasedGenerator<>(101, () -> 13, () -> 13);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class BiasedGeneratorTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("First generator must not be null");
 
-        new BiasedGenerator<>(20, null, new GeneratorOfInstance<Object>(0));
+        new BiasedGenerator<>(20, null, () -> 1);
     }
 
     @Test
@@ -102,6 +102,6 @@ public class BiasedGeneratorTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("Second generator must not be null");
 
-        new BiasedGenerator<>(20, new GeneratorOfInstance<Object>(0), null);
+        new BiasedGenerator<>(20, () -> 1, null);
     }
 }

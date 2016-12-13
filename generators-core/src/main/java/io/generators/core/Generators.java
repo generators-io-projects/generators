@@ -4,6 +4,8 @@ import com.google.common.collect.FluentIterable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static io.generators.core.MoreFunctions.*;
@@ -15,7 +17,9 @@ import static java.lang.Math.pow;
  * @author Tomas Klubal
  */
 public final class Generators {
-    public static final Generator<Integer> positiveInts = new RandomPositiveIntegerGenerator();
+    private static final Random random = ThreadLocalRandom.current();
+
+    public static final Generator<Integer> positiveInts = positiveInts(0, Integer.MAX_VALUE);
     public static final Generator<Long> positiveLongs = new RandomPositiveLongGenerator();
     public static final Generator<String> alphabetic10 = new RandomAlphabeticStringGenerator(10);
 
@@ -23,7 +27,9 @@ public final class Generators {
     }
 
     public static Generator<Integer> positiveInts(int from, int to) {
-        return new RandomPositiveIntegerGenerator(from, to);
+        checkArgument(from >= 0, "from must be >= 0");
+        checkArgument(from < to, "from must be < to");
+        return () -> from + random.nextInt(to - from);
     }
 
     public static Generator<Long> positiveLongs(long from, long to) {
@@ -34,8 +40,11 @@ public final class Generators {
         return new RandomAlphabeticStringGenerator(length);
     }
 
+    /**
+     * Generates the instance passed into the constructor.Null value is allowed.
+     */
     public static <T> Generator<T> ofInstance(T instance) {
-        return new GeneratorOfInstance<>(instance);
+        return () -> instance;
     }
 
     public static <T, V> Generator<T> ofType(Class<T> type, Generator<V> valueGenerator) {
@@ -68,26 +77,26 @@ public final class Generators {
         checkArgument(digits > 0 && digits < 11, "Number of digits must be between 1  and 10");
         int from = (int) pow(10, digits - 1);
         int to = (int) pow(10, digits);
-        return new RandomPositiveIntegerGenerator(from, to);
+        return positiveInts(from, to);
     }
 
     public static <F, T> Generator<T> transform(Generator<F> delegate, java.util.function.Function<F, T> transformation) {
         return delegate.map(transformation);
     }
 
-    public static Generator<String> upperCase(GeneratorOfInstance<String> delegate, Locale locale) {
-        return transform(delegate, toUpperCase(locale));
+    public static Generator<String> upperCase(Generator<String> delegate, Locale locale) {
+        return delegate.map(toUpperCase(locale));
     }
 
-    public static Generator<String> upperCase(GeneratorOfInstance<String> delegate) {
-        return transform(delegate, toUpperCase());
+    public static Generator<String> upperCase(Generator<String> delegate) {
+        return delegate.map(toUpperCase());
     }
 
-    public static Generator<String> lowerCase(GeneratorOfInstance<String> delegate) {
-        return transform(delegate, toLowerCase());
+    public static Generator<String> lowerCase(Generator<String> delegate) {
+        return delegate.map(toLowerCase());
     }
 
     public static Generator<String> lowerCase(Generator<String> delegate, Locale locale) {
-        return transform(delegate, toLowerCase(locale));
+        return delegate.map(toLowerCase(locale));
     }
 }
