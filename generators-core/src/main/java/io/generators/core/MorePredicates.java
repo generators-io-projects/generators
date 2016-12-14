@@ -36,7 +36,7 @@ public final class MorePredicates {
     }
 
     /**
-     * Predicate that returns true when input value is memeber of set consisting of {@code first} and {@code rest}
+     * Predicate that returns true when input value is member of set consisting of {@code first} and {@code rest}
      *
      * @param first element
      * @param rest  of the elements

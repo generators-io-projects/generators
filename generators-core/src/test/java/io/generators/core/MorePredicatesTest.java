@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.is;
 public class MorePredicatesTest {
 
     private static final Predicate<Integer> IN_PREDICATE = MorePredicates.in(6, 7, 8);
+    private static final Predicate<Integer> NOT_IN_PREDICATE = MorePredicates.notIn(6, 7, 8);
 
 
     @DataPoints
@@ -23,6 +24,11 @@ public class MorePredicatesTest {
             create(IN_PREDICATE, 7, true),
             create(IN_PREDICATE, 8, true),
             create(IN_PREDICATE, 9, false),
+            create(NOT_IN_PREDICATE, 5, true),
+            create(NOT_IN_PREDICATE, 6, false),
+            create(NOT_IN_PREDICATE, 7, false),
+            create(NOT_IN_PREDICATE, 8, false),
+            create(NOT_IN_PREDICATE, 9, true),
     };
 
     @Theory
