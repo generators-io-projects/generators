@@ -17,7 +17,7 @@ public class RandomPositiveLongGeneratorTest {
 
     @Test
     public void shouldReturnPositiveLongBetweenZeroAndIntegerMAX() {
-        Generator<Long> randomPositiveLongGenerator = new RandomPositiveLongGenerator();
+        Generator<Long> randomPositiveLongGenerator = Generators.positiveLongs;
         for (int i = 0; i < 100; i++) {
             assertThat(randomPositiveLongGenerator.next(), greaterThanOrEqualTo(0L));
         }
@@ -27,7 +27,7 @@ public class RandomPositiveLongGeneratorTest {
     public void shouldReturnPositiveIntegerBetweenFromInclusiveAndToExclusive() {
         long from = 13;
         long to = 20;
-        Generator<Long> randomPositiveLongGenerator = new RandomPositiveLongGenerator(from, to);
+        Generator<Long> randomPositiveLongGenerator = Generators.positiveLongs(from, to);
         Set<Long> generatedNumbers = newHashSet();
         for (int i = 0; i < 100; i++) {
             Long generatedLong = randomPositiveLongGenerator.next();
@@ -44,7 +44,7 @@ public class RandomPositiveLongGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be >= 0");
 
-        new RandomPositiveLongGenerator(-1, 20);
+        Generators.positiveLongs(-1, 20);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RandomPositiveLongGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveLongGenerator(5, 5);
+        Generators.positiveLongs(5, 5);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class RandomPositiveLongGeneratorTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("from must be < to");
 
-        new RandomPositiveLongGenerator(12, 11);
+        Generators.positiveLongs(12, 11);
     }
 
 }

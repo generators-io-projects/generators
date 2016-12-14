@@ -18,9 +18,10 @@ import static java.lang.Math.pow;
  */
 public final class Generators {
     private static final Random random = ThreadLocalRandom.current();
+    private static final PositiveLongRandom longRandom = new PositiveLongRandom();
 
     public static final Generator<Integer> positiveInts = positiveInts(0, Integer.MAX_VALUE);
-    public static final Generator<Long> positiveLongs = new RandomPositiveLongGenerator();
+    public static final Generator<Long> positiveLongs = positiveLongs(0,Long.MAX_VALUE);
     public static final Generator<String> alphabetic10 = new RandomAlphabeticStringGenerator(10);
 
     private Generators() {
@@ -33,7 +34,9 @@ public final class Generators {
     }
 
     public static Generator<Long> positiveLongs(long from, long to) {
-        return new RandomPositiveLongGenerator(from, to);
+        checkArgument(from >= 0, "from must be >= 0");
+        checkArgument(from < to, "from must be < to");
+        return () -> from + longRandom.nextLong(to - from);
     }
 
     public static Generator<String> alphabetic(int length) {
