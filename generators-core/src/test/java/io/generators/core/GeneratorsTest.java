@@ -1,5 +1,6 @@
 package io.generators.core;
 
+import io.generators.core.tuples.Tuple2;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -8,8 +9,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
+import static io.generators.core.tuples.Tuple.tuple;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -30,6 +33,19 @@ public class GeneratorsTest {
     public void shouldReturnPositiveIntegerGeneratorWithRange() {
         Integer integer = Generators.positiveInts(25, 26).next();
         assertThat(integer, is(25));
+    }
+
+    @Test
+    public void shouldZipTwoGeneratorsTogether() {
+       Generator<Integer> gen = new SequentialIntegerGenerator('a');
+       AtomicInteger c = new AtomicInteger('a');
+       Generator<Character> charGen = () -> (char)c.getAndIncrement();
+
+       Generator<Tuple2<Integer,Character>> zippedGen =  gen.zip(charGen);
+
+        for (int i = 'a'; i <= 'z' ; i++) {
+            assertThat(zippedGen.next(), is(tuple(i, (char) i)));
+        }
     }
 
     @Test
